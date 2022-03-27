@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Payment: Cyrus Herrera </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
+    <link rel="stylesheet" href="../assets/css/screen.css"/>
+  </head>
+  <body>
+    <header id="page-header">
+      <h1>The Store Company</h1>
+      <nav id="navigation">
+        <ul class="nav-info">
+          <li><a href="../">Shipping</a></li>
+          <li><a href="../billing/">Billing</a></li>
+          <li class="active"><a href="../payment/">Payment</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="content">
+      <ul class="buttons">
+        <li id="bag">
+          <input type="image" src="../assets/images/bag.png" alt="View shopping cart"/>
+        </li>
+      </ul>
+      <header id="label-payment">
+        <h2>Payment</h2>
+      </header>
+      <form action="../processed/" id="payment-form" aria-labelledby="label-payment">
+        <header class="page-cmd">
+          <h3>Pay With:</h3>
+        </header>
+        <fieldset name="payment-form">
+          <ol>
+            <li>
+              <label for="c-number">Card Number</label>
+              <input type="number" name="c-number" id="c-number" required />
+            </li>
+            <li>
+              <label for="exp-date">Expiration Date</label>
+              <input type="number" name="exp-date" id="exp-date" placeholder="MM/YY" required />
+            </li>
+            <li>
+              <label for="sec-code">Security Code</label>
+              <input type="number" name="sec-code" id="sec-code" placeholder="3 or 4 digit code" required />
+            </li>
+            <li>
+              <label for="c-name">Name on Card</label>
+              <input type="text" name="c-name" id="c-name" placeholder="John Doe" required />
+            </li>
+          </ol>
+        </fieldset>
+        <input type="submit" id="submit" value="Order Overview"/>
+      </form>
+      <aside id="order-info">
+        <section id="cart" aria-hidden="false">
+          <h3>Cart</h3>
+          <ul class="buttons">
+            <li id="x-button">
+              <input type="image" src="../assets/images/x-button.png" alt="Close shopping cart"/>
+            </li>
+          </ul>
+          <ul class="items">
+            <li>
+              <article id="item-1">
+                <header class="item-name">
+                  <h4>Apple</h4>
+                </header>
+                <p class="price">$0.99</p>
+                <select name="qty" class="qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+              </article>
+            </li>
+            <li>
+              <article id="item-2">
+                <header class="item-name">
+                  <h4>Hammer</h4>
+                </header>
+                <p class="price">$10.99</p>
+                <select name="qty" class="qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+              </article>
+            </li>
+            <li>
+              <article id="item-3">
+                <header class="item-name">
+                  <h4>Clock</h4>
+                </header>
+                <p class="price">$4.95</p>
+                <select name="qty" class="qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+            </article>
+            </li>
+          </ul>
+        </section>
+        <section id="summary">
+          <h3>Summary</h3>
+          <ul id="price-values">
+            <li>
+              <header id="subtotal">
+                <h4>Subtotal</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="shipping">
+                <h4>Shipping</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="tax">
+                <h4>Tax</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="total">
+                <h4>Total</h4>
+                <p>$X</p>
+              </header>
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+    <footer id="footer" class="payment">
+      Site copyright Cyrus Herrera 2022
+    </footer>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

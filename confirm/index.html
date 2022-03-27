@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Confirm: Cyrus Herrera </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
+    <link rel="stylesheet" href="../assets/css/screen.css"/>
+  </head>
+  <body>
+    <header id="page-header">
+      <h1>The Store Company</h1>
+      <nav id="navigation">
+        <ul class="nav-info">
+          <li><a href="../">Shipping</a></li>
+          <li><a href="../billing/">Billing</a></li>
+          <li><a href="../payment/">Payment</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="content">
+      <header id="label-confirm">
+        <h2>Confirm Order Info</h2>
+      </header>
+      <section id="order-info" class="confirm">
+        <h3>Cart</h3>
+        <ul class="items">
+          <li>
+            <article id="item-1">
+              <header class="item-name">
+                <h4>Apple</h4>
+              </header>
+              <p>Qty:</p>
+              <p class="price">$X</p>
+            </article>
+          </li>
+          <li>
+            <article id="item-2">
+              <header class="item-name">
+                <h4>Hammer</h4>
+              </header>
+              <p>Qty:</p>
+              <p class="price">$X</p>
+            </article>
+          </li>
+          <li>
+            <article id="item-3">
+              <header class="item-name">
+                <h4>Clock</h4>
+              </header>
+              <p>Qty:</p>
+              <p class="price">$X</p>
+            </article>
+          </li>
+        </ul>
+      </section>
+      <section id="shipping-info" class="confirm">
+        <h3>Shipping</h3>
+        <ul>
+          <li>
+            <h4>Full Name</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Email</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Country</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>State/Region/Province</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>City</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Address</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Zip/Postal Code</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Apartment Number</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Country Code</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Phone Number</h4>
+            <p></p>
+          </li>
+        </ul>
+      </section>
+      <section id="billing-info" class="confirm">
+        <h3>Billing</h3>
+        <ul>
+          <li>
+            <h4>Full Name</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Email</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Country</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>State/Region/Province</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>City</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Address</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Zip/Postal Code</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Apartment Number</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Country Code</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Phone Number</h4>
+            <p></p>
+          </li>
+        </ul>
+      </section>
+      <section id="payment-info" class="confirm">
+        <h3>Payment</h3>
+        <ul>
+          <li>
+            <h4>Card Number</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Expiration Date</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Security Code</h4>
+            <p></p>
+          </li>
+          <li>
+            <h4>Name on Card</h4>
+            <p></p>
+          </li>
+        </ul>
+      </section>
+      <section id="summary-info" class="confirm">
+        <h3>Summary</h3>
+        <ul id="price-values">
+          <li>
+            <header id="subtotal">
+              <h4>Subtotal</h4>
+              <p>$X</p>
+            </header>
+          </li>
+          <li>
+            <header id="shipping">
+              <h4>Shipping</h4>
+              <p>$X</p>
+            </header>
+          </li>
+          <li>
+            <header id="tax">
+              <h4>Tax</h4>
+              <p>$X</p>
+            </header>
+          </li>
+          <li>
+            <header id="total">
+              <h4>Total</h4>
+              <p>$X</p>
+            </header>
+          </li>
+        </ul>
+      </section>
+      <ul id="fail-simulation">
+        <li>
+          <input type="checkbox" name="check-to-fail" id="check-to-fail"/>
+          <label for="check-to-fail">Check to simulate failed processing</label>
+        </li>
+      </ul>
+      <ul id="proceed">
+        <li>
+          <form action="../payment/">
+            <fieldset name="return-form">
+              <input type="submit" id="return" value="Edit Order" />
+            </fieldset>
+          </form>
+        </li>
+        <li>
+          <form id="processed" action="../">
+            <fieldset name="return-form">
+              <input type="submit" id="submit" value="Confirm Order" />
+            </fieldset>
+          </form>
+        </li>
+      </ul>
+    </main>
+    <footer id="footer" class="confirm">
+      Site copyright Cyrus Herrera 2022
+    </footer>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
