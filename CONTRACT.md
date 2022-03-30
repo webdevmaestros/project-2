@@ -15,3 +15,6 @@
 - Grace will especially be concerned with the CSS
 - Angela will especially check on NightWatch and Backstop tests
 - Jacob will especially ensuring consistency in the HTML
+
+## Sign below with your full name:
+- Angela Petrone
