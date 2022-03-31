@@ -20,3 +20,4 @@
 - Angela Petrone
 - Jacob Noel
 - Grace Sopha
+- Cyrus Herrera
