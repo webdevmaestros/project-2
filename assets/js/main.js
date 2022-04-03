@@ -17,6 +17,7 @@ var updateSummary = document.querySelector('#price-values'); // Displayed prices
 var clickBag = ""; // Click bag icon to open cart
 var clickX = ""; // Click x icon to close cart
 var cont = ""; // Country name for shipping and tax costs
+var state = ""; // State name for shipping and tax costs
 var sub = 0; // Subtotal
 var shipping = 0; // Shipping cost
 var tax = 0; // Tax percentage
@@ -423,9 +424,10 @@ if (typeof(localStorage.localQtyData) === "string" && confirmPage !== "confirm")
   }
 }
 
-// If shipping data exist update the country name
+// If shipping data exist update the country and state names
 if (typeof(localStorage.localShippingData) === "string") {
   cont = localStorage.localShippingData.split(",")[2];
+  state = localStorage.localShippingData.split(",")[3];
   otherPrice();
 }
 
@@ -477,15 +479,88 @@ function otherPrice() {
   if (confirmPage !== "confirm") {
     localPricesArr = [];
 
-    if (formType === "shipping") {
+    if (formType === "shipping-form") {
       cont = document.querySelector('#shipping-form #country-name').value;
+      state = document.querySelector('#shipping-form #address-level1').value;
     }
 
     try {
 
       if (cont === "United States") {
         shipping = 10;
-        tax = 0.08;
+
+        if (state === "Alaska" || state === "Delaware" || state === "Montana" ||
+            state === "New Hampshire" || state === "Oregon") {
+          tax = 0;
+
+        } else if (state === "Colorado") {
+          tax = 0.029;
+
+        } else if (state === "Alabama" || state === "Georgia" || state === "Hawaii" ||
+                   state === "New York" || state === "Wyoming") {
+          tax = 0.04;
+
+        } else if (state === "Missouri") {
+          tax = 0.0423;
+
+        } else if (state === "Virginia") {
+          tax = 0.043;
+
+        } else if (state === "Louisiana") {
+          tax = 0.0445;
+
+        } else if (state === "Oklahoma" || state === "South Dakota") {
+          tax = 0.045;
+
+        } else if (state === "Nevada") {
+          tax = 0.046;
+
+        } else if (state === "Utah") {
+          tax = 0.047;
+
+        } else if (state === "North Carolina") {
+          tax = 0.0475;
+
+        } else if (state === "North Dakota" || state === "Wisconsin") {
+          tax = 0.05;
+
+        } else if (state === "New Mexico") {
+          tax = 0.0513;
+
+        } else if (state === "Maine" || state === "Nebraska") {
+          tax = 0.055;
+
+        } else if (state === "Arizona" || state === "Massachusetts") {
+          tax = 0.056;
+
+        } else if (state === "Ohio") {
+          tax = 0.0575;
+
+        } else if (state === "California" || state === "Florida" || state === "Idaho" ||
+                   state === "Iowa" || state == "Kentucky" || state === "Maryland" ||
+                   state === "Michigan" || state === "Pennsylvania" || state === "South Carolina" ||
+                   state === "Vermont" || state === "West Virginia") {
+          tax = 0.06;
+
+        } else if (state === "Illinois" || state === "Texas") {
+          tax = 0.0625;
+
+        } else if (state === "Connecticut") {
+          tax = 0.0635;
+
+        } else if (state === "Arkansas" || state == "Kansas" || state === "Washington") {
+          tax = 0.065;
+
+        } else if (state === "New Jersey") {
+          tax = 0.0663;
+
+        } else if (state === "Minnesota") {
+          tax = 0.0688
+
+        } else if (state === "Indiana" || state === "Mississippi" || state === "Rhode Island" ||
+                   state === "Tennessee") {
+          tax = 0.07;
+        }
 
       } else if (cont === "Canada") {
         shipping = 15;
@@ -495,7 +570,7 @@ function otherPrice() {
         shipping = 20;
         tax = 0.12;
 
-      } else if (cont === "" || cont === null) {
+      } else if (cont === "" || cont === null || cont.length < 4) {
         shipping = 0;
         tax = 0;
 
@@ -506,7 +581,7 @@ function otherPrice() {
 
       updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub;
 
-      if (tax !== 0 && shipping !== 0) {
+      if (cont !== "" || cont !== null || cont.length >= 4) {
         updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
         updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
       }
