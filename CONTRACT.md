@@ -19,3 +19,8 @@
 ## Sign below with your full name:
 - Angela Petrone
 - Jacob Noel
+<<<<<<< HEAD
+=======
+- Grace Sopha
+- Cyrus Herrera
+>>>>>>> upstream/main
