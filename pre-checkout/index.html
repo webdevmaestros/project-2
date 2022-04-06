@@ -23,7 +23,7 @@
       </header>
       <ul>
         <li>
-          <article id="sum-item-1">
+          <article class="summ-item">
             <header>
               <h4>Apple</h4>
             </header>
@@ -31,7 +31,7 @@
               <img src="../assets/images/apple.png" alt="Apple" aria-labelledby="item-name"/>
               <figcaption></figcaption>
             </figure>
-            <select>
+            <select hidden name="qty" class="qty">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -47,7 +47,7 @@
           </article>
         </li>
         <li>
-          <article id="sum-item-1">
+          <article class="summ-item">
             <header>
               <h4>Blueberries</h4>
             </header>
@@ -55,7 +55,7 @@
               <img src="../assets/images/blueberry.png" alt="Blueberries" aria-labelledby="item-name"/>
               <figcaption></figcaption>
             </figure>
-            <select>
+            <select hidden name="qty" class="qty">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -71,7 +71,7 @@
           </article>
         </li>
         <li>
-          <article id="sum-item-1">
+          <article class="summ-item">
             <header>
               <h4>Lychee</h4>
             </header>
@@ -79,7 +79,7 @@
               <img src="../assets/images/lychee.png" alt="Lychee" aria-labelledby="item-name"/>
               <figcaption></figcaption>
             </figure>
-            <select>
+            <select hidden name="qty" class="qty">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -95,47 +95,43 @@
           </article>
         </li>
       </ul>
-      <aside>
-        <a href="../index.html">Procced to checkout</a>
-        <ul>
-          <li>
-            <ul>
-              <li><p>Items (X)</p></li>
-              <li><p>$X</p></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li><p>Shipping</p></li>
-              <li>$X</li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li><p>Discount</p></li>
-              <li><p>None</p></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li><p>Tax</p></li>
-              <li><p>$X</p></li>
-            </ul>
-          </li>
-          <li>
-            <ul>
-              <li><p>Subtotal</p></li>
-              <li><p>$X</p></li>
-            </ul>
-          </li>
-
-
-
-        </ul>
+      <aside id="price-info">
+        <section id="summary">
+          <h3>Summary</h3>
+          <ul id="price-values">
+            <li>
+              <header id="subtotal">
+                <h4>Subtotal</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="discount">
+                <h4>Discount</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="shipping">
+                <h4>Shipping</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="tax">
+                <h4>Tax</h4>
+                <p>$X</p>
+              </header>
+            </li>
+            <li>
+              <header id="total">
+                <h4>Total</h4>
+                <p>$X</p>
+              </header>
+            </li>
+          </ul>
+        </section>
       </aside>
-
-
-
     </main>
     <footer id="footer" class="shipping">
       Site copyright Cyrus Herrera 2022
