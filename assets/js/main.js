@@ -26,6 +26,7 @@ var quantity = ""; // Cart quantity for confirm page
 var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
+var buyInput = "" // Selects all inputs for the shop all page
 // Used by for statements
 var i = 0;
 var j = 0;
@@ -41,13 +42,19 @@ var localPricesArr = [];
 contButton.setAttribute("disabled", "true");
 
 // Set these variables when on form pages
-if (confirmPage !== "confirm") {
-  formData = document.forms[0].children[1].children[0];
-  formLength = document.forms[0].length - 2;
-  formType = document.forms[0].id;
 
-} else {
-  contButton.removeAttribute("disabled");
+try {
+  if (confirmPage !== "confirm") {
+    formData = document.forms[0].children[1].children[0];
+    formLength = document.forms[0].length - 2;
+    formType = document.forms[0].id;
+
+  } else {
+    contButton.removeAttribute("disabled");
+  }
+
+} catch (e) {
+  console.log("Could not set form elements");
 }
 
 // Set default nav values when no correct data has been entered
@@ -679,4 +686,20 @@ function processData() {
     console.log("Failed to save Customer data");
     document.querySelector("#processed").setAttribute("action", "../failed/");
   }
+}
+
+/* <--------------- Ahop for Items ---------------> */
+
+if (confirmPage === "items") {
+  buyInput = document.querySelectorAll('input');
+
+  for (i = 0; i < buyInput.length-1; i++) {
+    buyInput[i].type = "button";
+    buyInput[i].addEventListener('click', addToCart);
+  }
+}
+
+function addToCart(a) {
+  var itemClicked = a.target;
+  itemClicked.value = "ADDED TO CART"
 }

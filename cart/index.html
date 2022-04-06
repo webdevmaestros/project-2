@@ -11,10 +11,8 @@
       <h1>The Store Company</h1>
       <nav id="navigation">
         <ul class="nav-info">
-          <li><a href="/">Shopping Cart</a></li>
-          <li><a href="../">Shipping</a></li>
-          <li><a href="../billing/">Billing</a></li>
-          <li><a href="../payment/">Payment</a></li>
+          <li class="active"><a href="../cart/">Shop All</a></li>
+          <li><a href="../pre-checkout/">See Cart</a></li>
         </ul>
       </nav>
     </header>
@@ -22,7 +20,7 @@
       <header id="label-cart">
         <h2>Items Avaliable</h2>
       </header>
-      <ul class="items">
+      <ul id="order-info" class="items">
         <li>
           <article id="item-1">
             <header class="item-name">
@@ -33,6 +31,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="p0001" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -45,6 +44,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="p0002" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -57,6 +57,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.89</p>
+            <input type="checkbox" id="p0003" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -69,6 +70,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$1.49</p>
+            <input type="checkbox" id="p0004" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -81,6 +83,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="p0005" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -93,6 +96,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="p0006" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -105,6 +109,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$1.99</p>
+            <input type="checkbox" id="p0007" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -117,6 +122,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="p0008" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -129,6 +135,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$2.99</p>
+            <input type="checkbox" id="p0009" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -141,6 +148,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.49</p>
+            <input type="checkbox" id="p0010" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -153,6 +161,7 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.79</p>
+            <input type="checkbox" id="p0011" value="Add Item to Cart">
           </article>
         </li>
         <li>
@@ -165,13 +174,16 @@
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="p0012" value="Add Item to Cart">
           </article>
         </li>
       </ul>
+      <input type="submit" id="submit" value="Continue to Cart"/>
     </section>
     </main>
     <footer id="footer" class="confirm">
       Site copyright Cyrus Herrera 2022
     </footer>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>
