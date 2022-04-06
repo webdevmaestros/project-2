@@ -688,18 +688,50 @@ function processData() {
   }
 }
 
-/* <--------------- Ahop for Items ---------------> */
+/* <--------------- Shop for Items ---------------> */
 
 if (confirmPage === "items") {
+  var cartItemsArr = [];
   buyInput = document.querySelectorAll('input');
 
   for (i = 0; i < buyInput.length-1; i++) {
-    buyInput[i].type = "button";
-    buyInput[i].addEventListener('click', addToCart);
+    if (i % 2 === 0) {
+      buyInput[i].type = "button";
+      buyInput[i].addEventListener('click', addToCart);
+
+    } else {
+      buyInput[i].addEventListener('click', removeFromCart);
+    }
   }
 }
 
 function addToCart(a) {
   var itemClicked = a.target;
-  itemClicked.value = "ADDED TO CART"
+  var remove = itemClicked.id.replace("a", "b");
+  var removeButton = document.querySelector('#' + remove);
+
+  itemClicked.type = "image";
+  itemClicked.src = "../assets/images/check.png";
+  itemClicked.alt = "Item added to cart";
+
+  cartItemsArr.push(itemClicked.id);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+  removeButton.removeAttribute('hidden');
+}
+
+function removeFromCart(b) {
+  var itemClicked = b.target;
+  var add = itemClicked.id.replace("b", "a");
+  var addButton = document.querySelector('#' + add);
+  var index = cartItemsArr.indexOf(add);
+
+  addButton.type = "button";
+  addButton.removeAttribute('src');
+  addButton.removeAttribute('alt');
+
+  cartItemsArr.splice(index, 1);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+  itemClicked.setAttribute('hidden', 'true');
 }
