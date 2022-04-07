@@ -671,6 +671,11 @@ li.active a {
     text-align: left;
   }
 
+  .items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   .js .items {
     justify-content: space-around;
   }
