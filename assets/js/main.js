@@ -766,8 +766,6 @@ if (confirmPage === "cart-items") {
     return response.text();})
   .then(function setData(itemData) {
     allItemsArr = itemData.split(/\r?\n/); fetchComplete()});
-
-
 }
 
 function fetchComplete() {
@@ -786,8 +784,6 @@ function fetchComplete() {
     itemIndex = parseInt(cartItemsArr[i].replace("a",""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
 
-    console.log(selectedItemArr[0]);
-
     atcl.id = "item-" + i;
     hdr.class = "item-name";
     h.innerHTML = selectedItemArr[0];
@@ -798,15 +794,9 @@ function fetchComplete() {
     slc.name = "qty";
     slc.class = "qty";
 
-    //if (i === 0) {
-      itemList.appendChild(document.createElement("li"));
-  //    console.log(selectedItemArr[0] + "IF")
-  //  } else {
-  //    itemList.appendChild(document.createElement("li").cloneNode(true));
-  //    console.log(selectedItemArr[0] + "ELSE");
-  //  }
+    sub += parseFloat(selectedItemArr[3].replace("$", ""));
 
-
+    itemList.appendChild(document.createElement("li"));
     document.querySelectorAll("li")[i+2].appendChild(atcl);
     atcl.appendChild(hdr);
     hdr.appendChild(h);
@@ -819,9 +809,9 @@ function fetchComplete() {
       opt.value = j.toString();
       opt.innerHTML = j.toString();
       slc.appendChild(opt.cloneNode(true));
-      if (j === 9) {
-        console.log(j);
-      }
     }
   }
+
+  updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+
 }
