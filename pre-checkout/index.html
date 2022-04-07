@@ -20,86 +20,9 @@
       <header>
         <h2>Your Cart</h2>
       </header>
-      <ul>
-        <li>
-          <article class="summ-item">
-            <header>
-              <h4>Apple</h4>
-            </header>
-            <figure>
-              <img src="../assets/images/apple.png" alt="Apple" aria-labelledby="item-name"/>
-              <figcaption></figcaption>
-            </figure>
-            <select hidden name="qty" class="qty">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-            <p>Product Price: $0.99</p>
-            <p>Cost: $X</p> <!--Price * Qty-->
-            <p>Shipping: Free 3 day shipping</p>
-            <a href="">Remove</a> <!--Possibly exchange with a small x icon-->
-          </article>
-        </li>
-        <li>
-          <article class="summ-item">
-            <header>
-              <h4>Blueberries</h4>
-            </header>
-            <figure>
-              <img src="../assets/images/blueberry.png" alt="Blueberries" aria-labelledby="item-name"/>
-              <figcaption></figcaption>
-            </figure>
-            <select hidden name="qty" class="qty">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-            <p>Product Price: $3.99</p>
-            <p>Cost: $X</p>
-            <p>Shipping: Free 3 day shipping</p>
-            <a href="">Remove</a>
-          </article>
-        </li>
-        <li>
-          <article class="summ-item">
-            <header>
-              <h4>Lychee</h4>
-            </header>
-            <figure>
-              <img src="../assets/images/lychee.png" alt="Lychee" aria-labelledby="item-name"/>
-              <figcaption></figcaption>
-            </figure>
-            <select hidden name="qty" class="qty">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-            <p>Product Price: $2.99</p>
-            <p>Cost: $X</p>
-            <p>Shipping: Free 3 day shipping</p>
-            <a href="">Remove</a>
-          </article>
-        </li>
+      <ul id="order-info" class="cart-items">
       </ul>
+      <input type="submit" id="submit" value="Continue to Checkout"/>
       <aside id="price-info">
         <section id="summary">
           <h3>Summary</h3>
@@ -141,6 +64,6 @@
     <footer id="footer" class="shipping">
       Site copyright Cyrus Herrera 2022
     </footer>
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>

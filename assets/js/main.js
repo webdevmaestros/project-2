@@ -26,7 +26,18 @@ var quantity = ""; // Cart quantity for confirm page
 var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
-var buyInput = "" // Selects all inputs for the shop all page
+var buyInput = ""; // Selects all inputs for the shop all page
+var itemList = ""; // List of items in cart
+var lst = ""; // Items for precheckout
+var atcl = ""; // Defines each item
+var hdr = ""; // Header for each item
+var h = ""; // Name for each item
+var para = ""; // Price for each item
+var slc = ""; // Select qty for each item
+var opt = ""; // qty value for each item
+var fig = ""; // Figure for an image
+var image = ""; // Image for items
+var itemIndex = ""; // Index of the item such as a0001 for apple
 // Used by for statements
 var i = 0;
 var j = 0;
@@ -38,6 +49,9 @@ var updatePrice = [];
 var qtyArr = [];
 var priceArr = [];
 var localPricesArr = [];
+var cartItemsArr = [];
+var allItemsArr = [];
+var selectedItemArr = [];
 
 contButton.setAttribute("disabled", "true");
 
@@ -544,7 +558,7 @@ function otherPrice() {
           tax = 0.0575;
 
         } else if (state === "California" || state === "Florida" || state === "Idaho" ||
-                   state === "Iowa" || state == "Kentucky" || state === "Maryland" ||
+                   state === "Iowa" || state === "Kentucky" || state === "Maryland" ||
                    state === "Michigan" || state === "Pennsylvania" || state === "South Carolina" ||
                    state === "Vermont" || state === "West Virginia") {
           tax = 0.06;
@@ -555,7 +569,7 @@ function otherPrice() {
         } else if (state === "Connecticut") {
           tax = 0.0635;
 
-        } else if (state === "Arkansas" || state == "Kansas" || state === "Washington") {
+        } else if (state === "Arkansas" || state === "Kansas" || state === "Washington") {
           tax = 0.065;
 
         } else if (state === "New Jersey") {
@@ -691,7 +705,6 @@ function processData() {
 /* <--------------- Shop for Items ---------------> */
 
 if (confirmPage === "items") {
-  var cartItemsArr = [];
   buyInput = document.querySelectorAll('input');
 
   for (i = 0; i < buyInput.length-1; i++) {
@@ -734,4 +747,62 @@ function removeFromCart(b) {
   localStorage.setItem("localCartItems", cartItemsArr);
 
   itemClicked.setAttribute('hidden', 'true');
+}
+
+/* <--------------- Shop for Items ---------------> */
+
+if (confirmPage === "cart-items") {
+  lst = document.createElement("li");
+  atcl = document.createElement("article");
+  hdr = document.createElement("header");
+  h = document.createElement("h4");
+  para = document.createElement("p");
+  slc = document.createElement("select");
+  opt = document.createElement("option");
+  fig = document.createElement("figure");
+  image = document.createElement("img");
+  itemList = document.querySelector("#order-info");
+
+  for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
+    cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
+  }
+
+  fetch('../assets/items/data.txt')
+  .then(function pullData(response){
+    return response.text();})
+  .then(function setData(itemData) {
+    allItemsArr = itemData.split(/\r?\n/); fetchComplete()});
+
+  function fetchComplete() {
+    for (i = 0; i < cartItemsArr.length; i++) {
+
+      itemIndex = parseInt(cartItemsArr[i].replace("a",""));
+      selectedItemArr = allItemsArr[itemIndex-1].split(",");
+
+      atcl.id = "item-" + i;
+      hdr.class = "item-name";
+      h.innerHTML = selectedItemArr[0];
+      image.src = selectedItemArr[1];
+      image.alt = selectedItemArr[2];
+      para.class = "price";
+      para.innerHTML = selectedItemArr[3];
+      slc.name = "qty";
+      slc.class = "qty";
+
+      itemList.appendChild(lst.cloneNode(true));
+      lst.appendChild(atcl);
+      atcl.appendChild(hdr);
+      hdr.appendChild(h);
+      atcl.appendChild(fig);
+      fig.appendChild(image);
+      atcl.appendChild(para);
+      atcl.appendChild(slc);
+
+      for (var j = 1; j < 10; j++) {
+        opt.value = j.toString();
+        opt.innerHTML = j.toString();
+        slc.appendChild(opt.cloneNode(true));
+      }
+    }
+  }
 }
