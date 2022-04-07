@@ -528,14 +528,14 @@ li.active a {
   }
 
   .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
   }
 
   .js .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
     padding: 0.5em;
   }
