@@ -705,7 +705,9 @@ function processData() {
 /* <--------------- Shop for Items ---------------> */
 
 if (confirmPage === "items") {
-  buyInput = document.querySelectorAll('input');
+  buyInput = document.querySelectorAll('.item-button');
+
+  contButton.removeAttribute("disabled");
 
   for (i = 0; i < buyInput.length-1; i++) {
     if (i % 2 === 0) {
@@ -730,6 +732,7 @@ function addToCart(a) {
   cartItemsArr.push(itemClicked.id);
   localStorage.setItem("localCartItems", cartItemsArr);
 
+
   removeButton.removeAttribute('hidden');
 }
 
@@ -749,19 +752,10 @@ function removeFromCart(b) {
   itemClicked.setAttribute('hidden', 'true');
 }
 
-/* <--------------- Shop for Items ---------------> */
+/* <--------------- Pre Checkout ---------------> */
 
 if (confirmPage === "cart-items") {
-  lst = document.createElement("li");
-  atcl = document.createElement("article");
-  hdr = document.createElement("header");
-  h = document.createElement("h4");
-  para = document.createElement("p");
-  slc = document.createElement("select");
-  opt = document.createElement("option");
-  fig = document.createElement("figure");
-  image = document.createElement("img");
-  itemList = document.querySelector("#order-info");
+  contButton.removeAttribute("disabled");
 
   for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
@@ -773,35 +767,60 @@ if (confirmPage === "cart-items") {
   .then(function setData(itemData) {
     allItemsArr = itemData.split(/\r?\n/); fetchComplete()});
 
-  function fetchComplete() {
-    for (i = 0; i < cartItemsArr.length; i++) {
 
-      itemIndex = parseInt(cartItemsArr[i].replace("a",""));
-      selectedItemArr = allItemsArr[itemIndex-1].split(",");
+}
 
-      atcl.id = "item-" + i;
-      hdr.class = "item-name";
-      h.innerHTML = selectedItemArr[0];
-      image.src = selectedItemArr[1];
-      image.alt = selectedItemArr[2];
-      para.class = "price";
-      para.innerHTML = selectedItemArr[3];
-      slc.name = "qty";
-      slc.class = "qty";
+function fetchComplete() {
+  for (i = 0; i < cartItemsArr.length; i++) {
 
-      itemList.appendChild(lst.cloneNode(true));
-      lst.appendChild(atcl);
-      atcl.appendChild(hdr);
-      hdr.appendChild(h);
-      atcl.appendChild(fig);
-      fig.appendChild(image);
-      atcl.appendChild(para);
-      atcl.appendChild(slc);
+    atcl = document.createElement("article");
+    hdr = document.createElement("header");
+    h = document.createElement("h4");
+    para = document.createElement("p");
+    slc = document.createElement("select");
+    opt = document.createElement("option");
+    fig = document.createElement("figure");
+    image = document.createElement("img");
+    itemList = document.querySelector("#order-info");
 
-      for (var j = 1; j < 10; j++) {
-        opt.value = j.toString();
-        opt.innerHTML = j.toString();
-        slc.appendChild(opt.cloneNode(true));
+    itemIndex = parseInt(cartItemsArr[i].replace("a",""));
+    selectedItemArr = allItemsArr[itemIndex-1].split(",");
+
+    console.log(selectedItemArr[0]);
+
+    atcl.id = "item-" + i;
+    hdr.class = "item-name";
+    h.innerHTML = selectedItemArr[0];
+    image.src = selectedItemArr[1];
+    image.alt = selectedItemArr[2];
+    para.class = "price";
+    para.innerHTML = selectedItemArr[3];
+    slc.name = "qty";
+    slc.class = "qty";
+
+    //if (i === 0) {
+      itemList.appendChild(document.createElement("li"));
+  //    console.log(selectedItemArr[0] + "IF")
+  //  } else {
+  //    itemList.appendChild(document.createElement("li").cloneNode(true));
+  //    console.log(selectedItemArr[0] + "ELSE");
+  //  }
+
+
+    document.querySelectorAll("li")[i+2].appendChild(atcl);
+    atcl.appendChild(hdr);
+    hdr.appendChild(h);
+    atcl.appendChild(fig);
+    fig.appendChild(image);
+    atcl.appendChild(para);
+    atcl.appendChild(slc);
+
+    for (j = 1; j < 10; j++) {
+      opt.value = j.toString();
+      opt.innerHTML = j.toString();
+      slc.appendChild(opt.cloneNode(true));
+      if (j === 9) {
+        console.log(j);
       }
     }
   }

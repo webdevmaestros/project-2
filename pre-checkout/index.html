@@ -20,9 +20,13 @@
       <header>
         <h2>Your Cart</h2>
       </header>
-      <ul id="order-info" class="cart-items">
-      </ul>
-      <input type="submit" id="submit" value="Continue to Checkout"/>
+      <form action="../" id="pre-chechout-form" aria-labelledby="label-pre-checout">
+        <fieldset name="pre-checkout-form">
+          <ul id="order-info" class="cart-items">
+          </ul>
+        </fieldset>
+        <input type="submit" id="submit" value="Continue to Checkout"/>
+      </form>
       <aside id="price-info">
         <section id="summary">
           <h3>Summary</h3>
@@ -36,24 +40,6 @@
             <li>
               <header id="discount">
                 <h4>Discount</h4>
-                <p>$X</p>
-              </header>
-            </li>
-            <li>
-              <header id="shipping">
-                <h4>Shipping</h4>
-                <p>$X</p>
-              </header>
-            </li>
-            <li>
-              <header id="tax">
-                <h4>Tax</h4>
-                <p>$X</p>
-              </header>
-            </li>
-            <li>
-              <header id="total">
-                <h4>Total</h4>
                 <p>$X</p>
               </header>
             </li>
