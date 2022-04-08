@@ -20,4 +20,7 @@
 - Angela Petrone
 - Jacob Noel
 - Grace Sopha
+<<<<<<< HEAD
+=======
 - Cyrus Herrera
+>>>>>>> upstream/main
