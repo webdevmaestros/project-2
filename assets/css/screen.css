@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@200&family=Montserrat:wght@200&display=swap');
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -10,9 +11,13 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 
 html {
   background-color: rgb(245, 245, 245); /* Light Grey */
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Commissioner', sans-serif;
   font-size: 1.5em; /* 24/16 = 1.5em */
   line-height: 1.2em; /* 28.8/ 24 = 1.2em */
+}
+
+header {
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -474,7 +479,7 @@ li.active a {
     top: 4.75em;
   }
 
-  #conetent {
+  #content {
     position: relative;
   }
 
@@ -528,14 +533,14 @@ li.active a {
   }
 
   .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
   }
 
   .js .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
     padding: 0.5em;
   }
@@ -664,6 +669,11 @@ li.active a {
 
   .js #cart h3 {
     text-align: left;
+  }
+
+  .items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .js .items {
