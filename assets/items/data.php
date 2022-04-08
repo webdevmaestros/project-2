@@ -1,3 +1,5 @@
+header("Access-Control-Allow-Origin: *");
+
 Apple,../assets/images/apple.png,Apple,$0.99
 Banana,../assets/images/banana.png,Banana,$0.99
 Orange,../assets/images/orange.png,Orange,$0.89
