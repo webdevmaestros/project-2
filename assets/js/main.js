@@ -776,7 +776,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   if (footercls === "shipping") {
-    fetch('/assets/items/data.txt')
+    fetch('/project-2/assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
       })
