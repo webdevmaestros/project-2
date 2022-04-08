@@ -1,0 +1,12 @@
+Apple,/project-2/assets/images/apple.png,Apple,$0.99
+Banana,/project-2/assets/images/banana.png,Banana,$0.99
+Orange,/project-2/assets/images/orange.png,Orange,$0.89
+Kiwi,/project-2/assets/images/kiwi.png,Kiwi,$1.49
+Blueberries,/project-2/assets/images/blueberry.png,Blueberries,$3.99
+Pear,/project-2/assets/images/pear.png,Pear,$0.99
+Grapes,/project-2/assets/images/grapes.png,Grapes,$1.99
+Strawberries,/project-2/assets/images/strawberry.png,Strawberries,$3.99
+Lychee,/project-2/assets/images/lychee.png,Lychee,$2.99
+Blackberries,/project-2/assets/images/blackberry.png,Blackberries,$3.49
+Coconut,/project-2/assets/images/coconut.png,Coconut,$3.79
+Dragonfruit,/project-2/assets/images/dragon-fruit.png,Dragonfruit,$3.99
