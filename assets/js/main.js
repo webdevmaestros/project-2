@@ -38,6 +38,7 @@ var opt = ""; // qty value for each item
 var fig = ""; // Figure for an image
 var image = ""; // Image for items
 var itemIndex = ""; // Index of the item such as a0001 for apple
+var footercls = document.querySelector("footer").className; // class of the footer used to select a page
 // Used by for statements
 var i = 0;
 var j = 0;
@@ -319,7 +320,7 @@ function fillBillingForm() {
 /* <--------------- Payment Data Storage ---------------> */
 
 try {
-  paymentFormData = document.getElementsByName('payment-form')[0].children[0];
+  paymentFormData = document.querySelector('#payment-form')[0].children[0];;
 } catch (e) {
   console.log("Could not set paymentFormData variables");
 }
@@ -393,6 +394,7 @@ function payData() {
 }
 
 /* <--------------- Shopping Cart Manipulation ---------------> */
+
 try {
   clickBag = document.querySelector('#bag').children[0];
   clickX = document.querySelector('#x-button').children[0];
@@ -402,7 +404,7 @@ try {
 }
 
 // If not on the confirm page, add prices to an array and local storage
-if (confirmPage !== "confirm") {
+if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
   for (i = 0; i < strPrice.length; i++) {
     priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
   }
@@ -428,6 +430,15 @@ for (i = 0; i < strPrice.length; i++) {
   normPrice[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
   updatePrice[i] = normPrice[i];
   sub += updatePrice[i];
+}
+
+if (typeof(localStorage.localNormPriceData) === "string") {
+  for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
+    console.log("HI")
+    normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
+    updatePrice[i] = normPrice[i];
+    sub += updatePrice[i];
+  }
 }
 
 // If qty has been changed update the subtotal
@@ -607,12 +618,21 @@ function otherPrice() {
         updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
       }
 
+      if (tax === "N/A") {
+        updateSummary.children[2].children[0].children[1].innerHTML = "$X"
+      }
+
       updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
 
       localPricesArr[0] = sub;
       localPricesArr[1] = shipping;
       localPricesArr[2] = tax * sub;
       localPricesArr[3] = ((tax * sub) + sub + shipping);
+
+      if (tax === "N/A") {
+        updateSummary.children[2].children[0].children[1].innerHTML = 0;
+        localPricesArr[2] = 0;
+      }
 
       updateQty();
 
@@ -754,8 +774,12 @@ function removeFromCart(b) {
 
 /* <--------------- Pre Checkout ---------------> */
 
-if (confirmPage === "cart-items") {
-  contButton.removeAttribute("disabled");
+if (footercls === "pre-checkout" || footercls === "shipping" ||
+    footercls === "billing" || footercls === "payment" || footercls === "confirm") {
+
+  if (footercls === "pre-checkout") {
+    contButton.removeAttribute("disabled");
+  }
 
   for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
@@ -779,25 +803,29 @@ function fetchComplete() {
     opt = document.createElement("option");
     fig = document.createElement("figure");
     image = document.createElement("img");
-    itemList = document.querySelector("#order-info");
+    itemList = document.querySelector(".items");
 
     itemIndex = parseInt(cartItemsArr[i].replace("a",""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
 
     atcl.id = "item-" + i;
-    hdr.class = "item-name";
+    hdr.classList = "item-name";
     h.innerHTML = selectedItemArr[0];
     image.src = selectedItemArr[1];
     image.alt = selectedItemArr[2];
-    para.class = "price";
+    para.classList = "price";
     para.innerHTML = selectedItemArr[3];
     slc.name = "qty";
-    slc.class = "qty";
+    slc.classList = "qty";
+
+    priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
+
+
 
     sub += parseFloat(selectedItemArr[3].replace("$", ""));
 
     itemList.appendChild(document.createElement("li"));
-    document.querySelectorAll("li")[i+2].appendChild(atcl);
+    document.querySelectorAll(".items li")[i].appendChild(atcl);
     atcl.appendChild(hdr);
     hdr.appendChild(h);
     atcl.appendChild(fig);
@@ -813,5 +841,35 @@ function fetchComplete() {
   }
 
   updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+  localStorage.setItem("localNormPriceData", priceArr);
+
+  qty = document.querySelectorAll('.qty');
+
+  for (var i = 0; i < qty.length; i++) {
+    qtyArr[i] = qty[i].value
+  }
+
+  localStorage.setItem("localQtyData", qtyArr);
+
+  strPrice = document.querySelectorAll('.price'); // Original prices
+
+  if (confirmPage !== "confirm") {
+    updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+    updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
+    updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
+    updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+
+    localPricesArr[0] = sub;
+    localPricesArr[1] = shipping;
+    localPricesArr[2] = tax * sub;
+    localPricesArr[3] = ((tax * sub) + sub + shipping);
+
+    localStorage.setItem("localPriceData", localPricesArr);
+  } else {
+    updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
+    updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
+    updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
+    updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
+  }
 
 }
