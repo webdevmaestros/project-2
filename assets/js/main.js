@@ -28,7 +28,6 @@ var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
 var buyInput = ""; // Selects all inputs for the shop all page
 var itemList = ""; // List of items in cart
-var lst = ""; // Items for precheckout
 var atcl = ""; // Defines each item
 var hdr = ""; // Header for each item
 var h = ""; // Name for each item
@@ -320,7 +319,7 @@ function fillBillingForm() {
 /* <--------------- Payment Data Storage ---------------> */
 
 try {
-  paymentFormData = document.querySelector('#payment-form')[0].children[0];;
+  paymentFormData = document.querySelector('#payment-form')[0].children[0];
 } catch (e) {
   console.log("Could not set paymentFormData variables");
 }
@@ -434,7 +433,7 @@ for (i = 0; i < strPrice.length; i++) {
 
 if (typeof(localStorage.localNormPriceData) === "string") {
   for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
-    console.log("HI")
+    console.log("HI");
     normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
     updatePrice[i] = normPrice[i];
     sub += updatePrice[i];
@@ -587,7 +586,7 @@ function otherPrice() {
           tax = 0.0663;
 
         } else if (state === "Minnesota") {
-          tax = 0.0688
+          tax = 0.0688;
 
         } else if (state === "Indiana" || state === "Mississippi" || state === "Rhode Island" ||
                    state === "Tennessee") {
@@ -618,21 +617,12 @@ function otherPrice() {
         updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
       }
 
-      if (tax === "N/A") {
-        updateSummary.children[2].children[0].children[1].innerHTML = "$X"
-      }
-
       updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
 
       localPricesArr[0] = sub;
       localPricesArr[1] = shipping;
       localPricesArr[2] = tax * sub;
       localPricesArr[3] = ((tax * sub) + sub + shipping);
-
-      if (tax === "N/A") {
-        updateSummary.children[2].children[0].children[1].innerHTML = 0;
-        localPricesArr[2] = 0;
-      }
 
       updateQty();
 
@@ -786,10 +776,13 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   fetch('../assets/items/data.txt')
-  .then(function pullData(response){
-    return response.text();})
-  .then(function setData(itemData) {
-    allItemsArr = itemData.split(/\r?\n/); fetchComplete()});
+    .then(function pullData(response){
+      return response.text();
+    })
+    .then(function setData(itemData) {
+      allItemsArr = itemData.split(/\r?\n/);
+      fetchComplete();
+    });
 }
 
 function fetchComplete() {
@@ -805,7 +798,7 @@ function fetchComplete() {
     image = document.createElement("img");
     itemList = document.querySelector(".items");
 
-    itemIndex = parseInt(cartItemsArr[i].replace("a",""));
+    itemIndex = parseInt(cartItemsArr[i].replace("a", ""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
 
     atcl.id = "item-" + i;
@@ -819,9 +812,6 @@ function fetchComplete() {
     slc.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
-
-
-
     sub += parseFloat(selectedItemArr[3].replace("$", ""));
 
     itemList.appendChild(document.createElement("li"));
@@ -831,12 +821,15 @@ function fetchComplete() {
     atcl.appendChild(fig);
     fig.appendChild(image);
     atcl.appendChild(para);
-    atcl.appendChild(slc);
 
-    for (j = 1; j < 10; j++) {
-      opt.value = j.toString();
-      opt.innerHTML = j.toString();
-      slc.appendChild(opt.cloneNode(true));
+    if (confirmPage !== "confirm") {
+      atcl.appendChild(slc);
+
+      for (j = 1; j < 10; j++) {
+        opt.value = j.toString();
+        opt.innerHTML = j.toString();
+        slc.appendChild(opt.cloneNode(true));
+      }
     }
   }
 
@@ -845,8 +838,8 @@ function fetchComplete() {
 
   qty = document.querySelectorAll('.qty');
 
-  for (var i = 0; i < qty.length; i++) {
-    qtyArr[i] = qty[i].value
+  for (i = 0; i < qty.length; i++) {
+    qtyArr[i] = qty[i].value;
   }
 
   localStorage.setItem("localQtyData", qtyArr);
