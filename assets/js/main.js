@@ -775,7 +775,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
   }
 
-  fetch('../assets/items/data.php')
+  fetch('../assets/items/data.txt')
     .then(function pullData(response){
       return response.text();
     })
