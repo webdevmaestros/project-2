@@ -17,6 +17,7 @@ var updateSummary = document.querySelector('#price-values'); // Displayed prices
 var clickBag = ""; // Click bag icon to open cart
 var clickX = ""; // Click x icon to close cart
 var cont = ""; // Country name for shipping and tax costs
+var state = ""; // State name for shipping and tax costs
 var sub = 0; // Subtotal
 var shipping = 0; // Shipping cost
 var tax = 0; // Tax percentage
@@ -25,6 +26,18 @@ var quantity = ""; // Cart quantity for confirm page
 var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
+var buyInput = ""; // Selects all inputs for the shop all page
+var itemList = ""; // List of items in cart
+var atcl = ""; // Defines each item
+var hdr = ""; // Header for each item
+var h = ""; // Name for each item
+var para = ""; // Price for each item
+var slc = ""; // Select qty for each item
+var opt = ""; // qty value for each item
+var fig = ""; // Figure for an image
+var image = ""; // Image for items
+var itemIndex = ""; // Index of the item such as a0001 for apple
+var footercls = document.querySelector("footer").className; // class of the footer used to select a page
 // Used by for statements
 var i = 0;
 var j = 0;
@@ -36,17 +49,26 @@ var updatePrice = [];
 var qtyArr = [];
 var priceArr = [];
 var localPricesArr = [];
+var cartItemsArr = [];
+var allItemsArr = [];
+var selectedItemArr = [];
 
 contButton.setAttribute("disabled", "true");
 
 // Set these variables when on form pages
-if (confirmPage !== "confirm") {
-  formData = document.forms[0].children[1].children[0];
-  formLength = document.forms[0].length - 2;
-  formType = document.forms[0].id;
 
-} else {
-  contButton.removeAttribute("disabled");
+try {
+  if (confirmPage !== "confirm") {
+    formData = document.forms[0].children[1].children[0];
+    formLength = document.forms[0].length - 2;
+    formType = document.forms[0].id;
+
+  } else {
+    contButton.removeAttribute("disabled");
+  }
+
+} catch (e) {
+  console.log("Could not set form elements");
 }
 
 // Set default nav values when no correct data has been entered
@@ -297,7 +319,7 @@ function fillBillingForm() {
 /* <--------------- Payment Data Storage ---------------> */
 
 try {
-  paymentFormData = document.getElementsByName('payment-form')[0].children[0];
+  paymentFormData = document.querySelector('#payment-form')[0].children[0];
 } catch (e) {
   console.log("Could not set paymentFormData variables");
 }
@@ -371,6 +393,7 @@ function payData() {
 }
 
 /* <--------------- Shopping Cart Manipulation ---------------> */
+
 try {
   clickBag = document.querySelector('#bag').children[0];
   clickX = document.querySelector('#x-button').children[0];
@@ -380,7 +403,7 @@ try {
 }
 
 // If not on the confirm page, add prices to an array and local storage
-if (confirmPage !== "confirm") {
+if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
   for (i = 0; i < strPrice.length; i++) {
     priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
   }
@@ -408,6 +431,15 @@ for (i = 0; i < strPrice.length; i++) {
   sub += updatePrice[i];
 }
 
+if (typeof(localStorage.localNormPriceData) === "string") {
+  for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
+    console.log("HI");
+    normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
+    updatePrice[i] = normPrice[i];
+    sub += updatePrice[i];
+  }
+}
+
 // If qty has been changed update the subtotal
 if (typeof(localStorage.localQtyData) === "string" && confirmPage !== "confirm") {
   try {
@@ -423,9 +455,10 @@ if (typeof(localStorage.localQtyData) === "string" && confirmPage !== "confirm")
   }
 }
 
-// If shipping data exist update the country name
+// If shipping data exist update the country and state names
 if (typeof(localStorage.localShippingData) === "string") {
   cont = localStorage.localShippingData.split(",")[2];
+  state = localStorage.localShippingData.split(",")[3];
   otherPrice();
 }
 
@@ -477,15 +510,88 @@ function otherPrice() {
   if (confirmPage !== "confirm") {
     localPricesArr = [];
 
-    if (formType === "shipping") {
+    if (formType === "shipping-form") {
       cont = document.querySelector('#shipping-form #country-name').value;
+      state = document.querySelector('#shipping-form #address-level1').value;
     }
 
     try {
 
       if (cont === "United States") {
         shipping = 10;
-        tax = 0.08;
+
+        if (state === "Alaska" || state === "Delaware" || state === "Montana" ||
+            state === "New Hampshire" || state === "Oregon") {
+          tax = 0;
+
+        } else if (state === "Colorado") {
+          tax = 0.029;
+
+        } else if (state === "Alabama" || state === "Georgia" || state === "Hawaii" ||
+                   state === "New York" || state === "Wyoming") {
+          tax = 0.04;
+
+        } else if (state === "Missouri") {
+          tax = 0.0423;
+
+        } else if (state === "Virginia") {
+          tax = 0.043;
+
+        } else if (state === "Louisiana") {
+          tax = 0.0445;
+
+        } else if (state === "Oklahoma" || state === "South Dakota") {
+          tax = 0.045;
+
+        } else if (state === "Nevada") {
+          tax = 0.046;
+
+        } else if (state === "Utah") {
+          tax = 0.047;
+
+        } else if (state === "North Carolina") {
+          tax = 0.0475;
+
+        } else if (state === "North Dakota" || state === "Wisconsin") {
+          tax = 0.05;
+
+        } else if (state === "New Mexico") {
+          tax = 0.0513;
+
+        } else if (state === "Maine" || state === "Nebraska") {
+          tax = 0.055;
+
+        } else if (state === "Arizona" || state === "Massachusetts") {
+          tax = 0.056;
+
+        } else if (state === "Ohio") {
+          tax = 0.0575;
+
+        } else if (state === "California" || state === "Florida" || state === "Idaho" ||
+                   state === "Iowa" || state === "Kentucky" || state === "Maryland" ||
+                   state === "Michigan" || state === "Pennsylvania" || state === "South Carolina" ||
+                   state === "Vermont" || state === "West Virginia") {
+          tax = 0.06;
+
+        } else if (state === "Illinois" || state === "Texas") {
+          tax = 0.0625;
+
+        } else if (state === "Connecticut") {
+          tax = 0.0635;
+
+        } else if (state === "Arkansas" || state === "Kansas" || state === "Washington") {
+          tax = 0.065;
+
+        } else if (state === "New Jersey") {
+          tax = 0.0663;
+
+        } else if (state === "Minnesota") {
+          tax = 0.0688;
+
+        } else if (state === "Indiana" || state === "Mississippi" || state === "Rhode Island" ||
+                   state === "Tennessee") {
+          tax = 0.07;
+        }
 
       } else if (cont === "Canada") {
         shipping = 15;
@@ -495,7 +601,7 @@ function otherPrice() {
         shipping = 20;
         tax = 0.12;
 
-      } else if (cont === "" || cont === null) {
+      } else if (cont === "" || cont === null || cont.length < 4) {
         shipping = 0;
         tax = 0;
 
@@ -506,7 +612,7 @@ function otherPrice() {
 
       updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub;
 
-      if (tax !== 0 && shipping !== 0) {
+      if (cont !== "" || cont !== null || cont.length >= 4) {
         updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
         updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
       }
@@ -604,4 +710,177 @@ function processData() {
     console.log("Failed to save Customer data");
     document.querySelector("#processed").setAttribute("action", "../failed/");
   }
+}
+
+/* <--------------- Shop for Items ---------------> */
+
+if (confirmPage === "items") {
+  buyInput = document.querySelectorAll('.item-button');
+
+  contButton.removeAttribute("disabled");
+
+  for (i = 0; i < buyInput.length-1; i++) {
+    if (i % 2 === 0) {
+      buyInput[i].type = "button";
+      buyInput[i].addEventListener('click', addToCart);
+
+    } else {
+      buyInput[i].addEventListener('click', removeFromCart);
+    }
+  }
+}
+
+function addToCart(a) {
+  var itemClicked = a.target;
+  var remove = itemClicked.id.replace("a", "b");
+  var removeButton = document.querySelector('#' + remove);
+
+  itemClicked.type = "image";
+  itemClicked.src = "../assets/images/check.png";
+  itemClicked.alt = "Item added to cart";
+
+  cartItemsArr.push(itemClicked.id);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+
+  removeButton.removeAttribute('hidden');
+}
+
+function removeFromCart(b) {
+  var itemClicked = b.target;
+  var add = itemClicked.id.replace("b", "a");
+  var addButton = document.querySelector('#' + add);
+  var index = cartItemsArr.indexOf(add);
+
+  addButton.type = "button";
+  addButton.removeAttribute('src');
+  addButton.removeAttribute('alt');
+
+  cartItemsArr.splice(index, 1);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+  itemClicked.setAttribute('hidden', 'true');
+}
+
+/* <--------------- Pre Checkout ---------------> */
+
+if (footercls === "pre-checkout" || footercls === "shipping" ||
+    footercls === "billing" || footercls === "payment" || footercls === "confirm") {
+
+  if (footercls === "pre-checkout") {
+    contButton.removeAttribute("disabled");
+  }
+
+  for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
+    cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
+  }
+
+  if (footercls === "shipping") {
+    fetch('/project-2/assets/items/data-root.txt')
+      .then(function pullData(response){
+        return response.text();
+      })
+      .then(function setData(itemData) {
+        allItemsArr = itemData.split(/\r?\n/);
+        fetchComplete();
+      });
+  } else {
+    fetch('../assets/items/data.txt')
+      .then(function pullData(response){
+        return response.text();
+      })
+      .then(function setData(itemData) {
+        allItemsArr = itemData.split(/\r?\n/);
+        fetchComplete();
+      });
+  }
+
+}
+
+function fetchComplete() {
+  for (i = 0; i < cartItemsArr.length; i++) {
+
+    atcl = document.createElement("article");
+    hdr = document.createElement("header");
+    h = document.createElement("h4");
+    para = document.createElement("p");
+    slc = document.createElement("select");
+    opt = document.createElement("option");
+    fig = document.createElement("figure");
+    image = document.createElement("img");
+    itemList = document.querySelector(".items");
+
+    itemIndex = parseInt(cartItemsArr[i].replace("a", ""));
+    selectedItemArr = allItemsArr[itemIndex-1].split(",");
+
+    atcl.id = "item-" + i;
+    hdr.classList = "item-name";
+    h.innerHTML = selectedItemArr[0];
+    image.src = selectedItemArr[1];
+    image.alt = selectedItemArr[2];
+    para.classList = "price";
+    para.innerHTML = selectedItemArr[3];
+    slc.name = "qty";
+    slc.classList = "qty";
+
+    priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
+    sub += parseFloat(selectedItemArr[3].replace("$", ""));
+
+    itemList.appendChild(document.createElement("li"));
+    document.querySelectorAll(".items li")[i].appendChild(atcl);
+    atcl.appendChild(hdr);
+    hdr.appendChild(h);
+    atcl.appendChild(fig);
+    fig.appendChild(image);
+    atcl.appendChild(para);
+
+    if (confirmPage !== "confirm") {
+      atcl.appendChild(slc);
+
+      for (j = 1; j < 10; j++) {
+        opt.value = j.toString();
+        opt.innerHTML = j.toString();
+        slc.appendChild(opt.cloneNode(true));
+      }
+    }
+  }
+
+  updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+  localStorage.setItem("localNormPriceData", priceArr);
+
+  qty = document.querySelectorAll('.qty');
+
+  for (i = 0; i < qty.length; i++) {
+    qtyArr[i] = qty[i].value;
+  }
+
+  localStorage.setItem("localQtyData", qtyArr);
+
+  strPrice = document.querySelectorAll('.price'); // Original prices
+
+  if (confirmPage !== "confirm") {
+
+    try {
+      updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+      updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
+      updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
+      updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+
+      localPricesArr[0] = sub;
+      localPricesArr[1] = shipping;
+      localPricesArr[2] = tax * sub;
+      localPricesArr[3] = ((tax * sub) + sub + shipping);
+
+      localStorage.setItem("localPriceData", localPricesArr);
+    } catch (e) {
+      console.log("Could not set prices");
+    }
+
+  } else {
+    updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
+    updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
+    updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
+    updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
+  }
+
 }
