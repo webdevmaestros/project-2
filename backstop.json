@@ -8,12 +8,17 @@
     },
     {
       "label": "tablet",
-      "width": 1024,
+      "width": 444,
       "height": 768
     },
     {
       "label": "big-tablet-landscape",
-      "width": 1800,
+      "width": 750,
+      "height": 900
+    },
+    {
+      "label": "desktop",
+      "width": 1200,
       "height": 900
     }
   ],
