@@ -8,12 +8,17 @@
     },
     {
       "label": "tablet",
-      "width": 1024,
+      "width": 444,
       "height": 768
     },
     {
       "label": "big-tablet-landscape",
-      "width": 1800,
+      "width": 750,
+      "height": 900
+    },
+    {
+      "label": "desktop",
+      "width": 1200,
       "height": 900
     }
   ],
@@ -21,23 +26,105 @@
   "onReadyScript": "puppet/onReady.js",
   "scenarios": [
     {
-      "label": "Cyrus Herrera: Project 1",
-      "cookiePath": "backstop_data/engine_scripts/cookies.json",
-      "url": "http://localhost:8080/",
-      "referenceUrl": "",
-      "readyEvent": "",
-      "readySelector": "",
-      "delay": 0,
-      "hideSelectors": [],
-      "removeSelectors": [],
-      "hoverSelector": "",
-      "clickSelector": "",
-      "postInteractionWait": 0,
-      "selectors": [],
-      "selectorExpansion": true,
-      "expect": 0,
-      "misMatchThreshold" : 0.1,
-      "requireSameDimensions": true
+        "label": "Empty Shipping Page",
+        "url": "http://localhost:8080/",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Billing Page",
+        "url": "http://localhost:8080/billing",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Payment Page",
+        "url": "http://localhost:8080/payment",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Filled Shipping Page",
+        "url": "http://localhost:8080/",
+        "keyPressSelectors": [
+          {
+           "selector": "#name",
+           "keyPress": "Angela Petrone"
+         },
+         {
+          "selector": "#email",
+          "keyPress": "ap@gmail.com"
+          },
+          {
+           "selector": "#country-name",
+           "keyPress": "United States"
+         },
+         {
+           "selector": "#address-level1",
+           "keyPress": "Illinois"
+         },
+         {
+           "selector": "#address-level2",
+           "keyPress": "Chicago"
+         },
+         {
+          "selector": "#street-address",
+          "keyPress": "1234 Flower Av."
+        },
+        {
+          "selector": "#postal-code",
+          "keyPress": "66782"
+        },
+        {
+          "selector": "#street-address2",
+          "keyPress": "n/a"
+        },
+        {
+          "selector": "#tel-country-code",
+          "keyPress": "+1"
+        },
+        {
+          "selector": "#tel-national",
+          "keyPress": "2345611897"
+        }
+      ],
+      "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Filled Billing Page [Same As Shipping]",
+        "url": "http://localhost:8080/billing",
+        "clickSelector": "#same-as-shipping",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Filled Payment Page",
+        "url": "http://localhost:8080/payment",
+        "keyPressSelectors": [
+          {
+           "selector": "#c-number",
+           "keyPress": "123456789012345"
+         },
+         {
+          "selector": "#exp-date",
+          "keyPress": "09/35"
+          },
+          {
+           "selector": "#sec-code",
+           "keyPress": "345"
+         },
+         {
+           "selector": "#c-name",
+           "keyPress": "Angela Petrone"
+         }
+      ],
+      "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Confirm Page",
+        "url": "http://localhost:8080/confirm",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Processed Page",
+        "url": "http://localhost:8080/processed",
+        "misMatchThreshold" : 0.1
     }
   ],
   "paths": {
