@@ -460,6 +460,16 @@ li.active a {
   grid-area: phone;
 }
 
+#confirm section {
+  margin-bottom: 48px; /* 28.8/ 24 = 1.2em */
+}
+
+#confirm h3 {
+  color: rgb(0, 157, 224);
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
 @media screen and (min-width: 12.625em) /* 202px = 12.625em */ {
 
   h1 {
@@ -505,11 +515,6 @@ li.active a {
 }
 
 @media screen and (min-width: 20.625em) /* 330px = 20.625em */ {
-
-  .confirm ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
 
   .js #bag input {
     left: -3.5em;
@@ -762,6 +767,12 @@ li.active a {
   #price-values {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .confirm ul {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    padding-bottom: 40px;
   }
 
 }
