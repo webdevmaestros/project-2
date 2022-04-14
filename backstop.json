@@ -26,6 +26,11 @@
   "onReadyScript": "puppet/onReady.js",
   "scenarios": [
     {
+        "label": "Empty Pre-Checkout Page",
+        "url": "http://localhost:8080/pre-checkout",
+        "misMatchThreshold" : 0.1
+    },
+    {
         "label": "Empty Shipping Page",
         "url": "http://localhost:8080/",
         "misMatchThreshold" : 0.1
@@ -38,6 +43,21 @@
     {
         "label": "Empty Payment Page",
         "url": "http://localhost:8080/payment",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Confirmation Page",
+        "url": "http://localhost:8080/confirm",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Failed Order Page",
+        "url": "http://localhost:8080/failed",
+        "misMatchThreshold" : 0.1
+    },
+    {
+        "label": "Empty Processed Order Page",
+        "url": "http://localhost:8080/processed",
         "misMatchThreshold" : 0.1
     },
     {
