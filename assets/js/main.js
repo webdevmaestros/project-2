@@ -775,14 +775,26 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
   }
 
-  fetch('../assets/items/data.txt')
-    .then(function pullData(response){
-      return response.text();
-    })
-    .then(function setData(itemData) {
-      allItemsArr = itemData.split(/\r?\n/);
-      fetchComplete();
-    });
+  if (footercls === "shipping") {
+    fetch('/project-2/assets/items/data-root.txt')
+      .then(function pullData(response){
+        return response.text();
+      })
+      .then(function setData(itemData) {
+        allItemsArr = itemData.split(/\r?\n/);
+        fetchComplete();
+      });
+  } else {
+    fetch('../assets/items/data.txt')
+      .then(function pullData(response){
+        return response.text();
+      })
+      .then(function setData(itemData) {
+        allItemsArr = itemData.split(/\r?\n/);
+        fetchComplete();
+      });
+  }
+
 }
 
 function fetchComplete() {
@@ -847,17 +859,23 @@ function fetchComplete() {
   strPrice = document.querySelectorAll('.price'); // Original prices
 
   if (confirmPage !== "confirm") {
-    updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
-    updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
-    updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
-    updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
 
-    localPricesArr[0] = sub;
-    localPricesArr[1] = shipping;
-    localPricesArr[2] = tax * sub;
-    localPricesArr[3] = ((tax * sub) + sub + shipping);
+    try {
+      updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
+      updateSummary.children[1].children[0].children[1].innerHTML = "$" + shipping.toFixed(2);
+      updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
+      updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
 
-    localStorage.setItem("localPriceData", localPricesArr);
+      localPricesArr[0] = sub;
+      localPricesArr[1] = shipping;
+      localPricesArr[2] = tax * sub;
+      localPricesArr[3] = ((tax * sub) + sub + shipping);
+
+      localStorage.setItem("localPriceData", localPricesArr);
+    } catch (e) {
+      console.log("Could not set prices");
+    }
+
   } else {
     updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
     updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
