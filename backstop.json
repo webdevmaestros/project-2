@@ -26,14 +26,11 @@
   "onReadyScript": "puppet/onReady.js",
   "scenarios": [
     {
-<<<<<<< HEAD
         "label": "Empty Pre-Checkout Page",
         "url": "http://localhost:8080/pre-checkout",
         "misMatchThreshold" : 0.1
     },
     {
-=======
->>>>>>> 405971a2f597082abd4af606223e31b9c62e72e6
         "label": "Empty Shipping Page",
         "url": "http://localhost:8080/",
         "misMatchThreshold" : 0.1
@@ -49,7 +46,6 @@
         "misMatchThreshold" : 0.1
     },
     {
-<<<<<<< HEAD
         "label": "Empty Confirmation Page",
         "url": "http://localhost:8080/confirm",
         "misMatchThreshold" : 0.1
@@ -65,8 +61,6 @@
         "misMatchThreshold" : 0.1
     },
     {
-=======
->>>>>>> 405971a2f597082abd4af606223e31b9c62e72e6
         "label": "Filled Shipping Page",
         "url": "http://localhost:8080/",
         "keyPressSelectors": [
