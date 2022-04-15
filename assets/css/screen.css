@@ -61,6 +61,15 @@ p {
   padding-left: 1.25em; /* 19.2 / 15.36 = 0.78125em */
 }
 
+button {
+  font-family: 'Commissioner', Arial, sans-serif;
+  padding: 0.512em;
+  background-color: rgb(245, 245, 245); /* Light Grey */
+  border: none;
+  color: #FFF6F6;
+  border-radius: 1em;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -727,6 +736,7 @@ li.active a {
   #submit {
     width: 35.25%;
     margin-top: -22.75em;
+
   }
 
   .js #submit {
