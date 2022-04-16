@@ -36,6 +36,7 @@ var slc = ""; // Select qty for each item
 var opt = ""; // qty value for each item
 var fig = ""; // Figure for an image
 var image = ""; // Image for items
+var rmv = ""; // Button to remove items from cart
 var itemIndex = ""; // Index of the item such as a0001 for apple
 var footercls = document.querySelector("footer").className; // class of the footer used to select a page
 // Used by for statements
@@ -53,7 +54,11 @@ var cartItemsArr = [];
 var allItemsArr = [];
 var selectedItemArr = [];
 
-contButton.setAttribute("disabled", "true");
+try {
+  contButton.setAttribute("disabled", "true");
+} catch (e) {
+  console.log("Could not disable contButton")
+}
 
 // Set these variables when on form pages
 
@@ -690,8 +695,12 @@ if (document.querySelector("#order-info").className === "confirm") {
 
 /* <--------------- Processed Data ---------------> */
 
-processed = document.querySelector("#processed input");
-save = document.querySelector("#check-to-fail");
+try {
+  processed = document.querySelector("#processed")[1];
+  save = document.querySelector("#check-to-fail");
+} catch (e) {
+  console.log("Could not set buttons for confirm page")
+}
 
 try {
   processed.addEventListener('click', processData);
@@ -776,7 +785,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   if (footercls === "shipping") {
-    fetch('/project-2/assets/items/data-root.txt')
+    fetch('../assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
       })
@@ -809,6 +818,7 @@ function fetchComplete() {
     fig = document.createElement("figure");
     image = document.createElement("img");
     itemList = document.querySelector(".items");
+    rmv = document.createElement("input");
 
     itemIndex = parseInt(cartItemsArr[i].replace("a", ""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
@@ -822,6 +832,10 @@ function fetchComplete() {
     para.innerHTML = selectedItemArr[3];
     slc.name = "qty";
     slc.classList = "qty";
+    rmv.type = "button"
+    rmv.id = "r" + i;
+    rmv.classList = "remove-button"
+    rmv.value = "Remove from cart"
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
     sub += parseFloat(selectedItemArr[3].replace("$", ""));
@@ -842,6 +856,10 @@ function fetchComplete() {
         opt.innerHTML = j.toString();
         slc.appendChild(opt.cloneNode(true));
       }
+
+      atcl.appendChild(rmv);
+
+      document.querySelectorAll(".remove-button")[i].addEventListener('click', removeItem);
     }
   }
 
@@ -883,4 +901,14 @@ function fetchComplete() {
     updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
   }
 
+}
+
+function removeItem(rbutton) {
+  var index = parseInt(rbutton.target.id.replace("r", ""));
+
+  cartItemsArr.splice(index, 1);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+  document.querySelector(".items").children[index].setAttribute('hidden', 'true');
+  console.log(index);
 }
