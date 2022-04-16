@@ -523,6 +523,7 @@ li.active a {
     column-gap: 0.5em;
     display: block;
   }
+}
 
 @media screen and (min-width: 20.625em) /* 330px = 20.625em */ {
 
