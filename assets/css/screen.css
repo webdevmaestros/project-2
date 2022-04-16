@@ -685,6 +685,11 @@ li.active a {
     text-align: left;
   }
 
+  /* checkmark when added to cart*/
+  .item-button[type="image"] {
+  max-width: 10em; /* 240 / 24 = 10em*/
+  }
+
   .items{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
