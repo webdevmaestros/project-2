@@ -27,6 +27,7 @@ var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
 var buyInput = ""; // Selects all inputs for the shop all page
+var preCart = document.querySelector('#pre-checkout-form'); // Pre-checkout Cart values
 var itemList = ""; // List of items in cart
 var atcl = ""; // Defines each item
 var hdr = ""; // Header for each item
@@ -460,6 +461,12 @@ try {
 }
 
 try {
+  preCart.addEventListener('input', updateQty);
+} catch (e) {
+  console.log("Could not addEventListener to the pre checkout cart");
+}
+
+try {
   shippingFormData.addEventListener('input', otherPrice);
 } catch (e) {
   console.log("Could not addEventListener to shippingFormData");
@@ -482,7 +489,11 @@ function updateQty() {
     console.log("THIS IS AWFUL")
 
     updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
-    updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+    try {
+      updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+    } catch (e) {
+      console.log("Could not display total")
+    } 
     if (tax !== 0){
       updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
     }
@@ -865,7 +876,6 @@ function fetchComplete() {
 
   // If qty has been changed update the subtotal
 
-
   try {
     sub = 0;
     for (i = 0; i < strPrice.length; i++) {
@@ -880,7 +890,6 @@ function fetchComplete() {
   } catch (e) {
     console.log("Could not update prices");
   }
-
 
   // If shipping data exist update the country and state names
   if (typeof(localStorage.localShippingData) === "string") {
