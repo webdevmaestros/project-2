@@ -33,10 +33,11 @@ var hdr = ""; // Header for each item
 var h = ""; // Name for each item
 var para = ""; // Price for each item
 var slc = ""; // Select qty for each item
-var opt = ""; // qty value for each item
+var opt = ""; // Qty value for each item
 var fig = ""; // Figure for an image
 var image = ""; // Image for items
 var rmv = ""; // Button to remove items from cart
+var cnfqty = ""; // Qty value for confirm page
 var itemIndex = ""; // Index of the item such as a0001 for apple
 var footercls = document.querySelector("footer").className; // class of the footer used to select a page
 // Used by for statements
@@ -798,6 +799,7 @@ function fetchComplete() {
     image = document.createElement("img");
     itemList = document.querySelector(".items");
     rmv = document.createElement("input");
+    cnfqty = document.createElement("p");
 
     itemIndex = parseInt(cartItemsArr[i].replace("a", ""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
@@ -815,6 +817,7 @@ function fetchComplete() {
     rmv.id = "r" + i;
     rmv.classList = "remove-button"
     rmv.value = "Remove from cart"
+    cnfqty.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
     sub += parseFloat(selectedItemArr[3].replace("$", ""));
@@ -835,19 +838,18 @@ function fetchComplete() {
         opt.innerHTML = j.toString();
         slc.appendChild(opt.cloneNode(true));
       }
-
       atcl.appendChild(rmv);
-
       document.querySelectorAll(".remove-button")[i].addEventListener('click', removeItem);
+    } else {
+      atcl.appendChild(cnfqty);
     }
+
   }
 
   updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
   localStorage.setItem("localNormPriceData", priceArr);
 
   qty = document.querySelectorAll('.qty');
-
-
 
   if (footercls === "pre-checkout") {
 
@@ -863,20 +865,21 @@ function fetchComplete() {
 
   // If qty has been changed update the subtotal
 
-    console.log(strPrice)
-    try {
-      sub = 0;
-      for (i = 0; i < strPrice.length; i++) {
-        qty[i].value = parseInt(localStorage.localQtyData.split(",")[i]);
-        updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
-        strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
-        sub += updatePrice[i];
-      }
 
-      console.log("qty[0].value")
-    } catch (e) {
-      console.log("Could not update prices");
+  try {
+    sub = 0;
+    for (i = 0; i < strPrice.length; i++) {
+      qty[i].value = parseInt(localStorage.localQtyData.split(",")[i]);
+      if (confirmPage === "confirm") {
+        qty[i].innerHTML = "Qty: " + localStorage.localQtyData.split(",")[i];
+      }
+      updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
+      strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
+      sub += updatePrice[i];
     }
+  } catch (e) {
+    console.log("Could not update prices");
+  }
 
 
   // If shipping data exist update the country and state names
