@@ -151,6 +151,11 @@ fieldset ol {
   display: none;
 }
 
+/* checkmark when added to cart*/
+.item-button[type="image"] {
+  max-width: 8em; /* 192 / 24 = 8em*/
+}
+
 .js #bag input {
   display: block;
   position: absolute;
