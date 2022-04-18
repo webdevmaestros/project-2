@@ -371,6 +371,8 @@ function payData() {
   // Remove all non-digits from Month and Year value
   cardDate = paymentDataArr[1].replace(/\D/g, '');
 
+
+
   // If Month and Year is 4 digits long, add a "/" between them
   if (cardDate.length === 4) {
     paymentDataArr[1] = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
@@ -380,7 +382,8 @@ function payData() {
   // If payment data is verified, enable continue button
   if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
       cardDate.length === 4 && paymentDataArr[2].length >= 3 &&
-      paymentDataArr[2].length <= 4) {
+      paymentDataArr[2].length <= 4 && paymentDataArr[3].indexOf(' ') > 0 &&
+      paymentDataArr[3].indexOf(' ') + 1 < paymentDataArr[3].length) {
 
     try {
       contButton.removeAttribute("disabled");
