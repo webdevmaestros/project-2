@@ -67,6 +67,12 @@ button {
   border: none;
 }
 
+.item-button{
+  font-family: 'Commissioner', Arial, sans-serif;
+  padding: 0.512em;
+  width: 13.5em;
+}
+
 * {
   box-sizing: border-box;
 }
