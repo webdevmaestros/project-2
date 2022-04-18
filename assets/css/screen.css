@@ -29,6 +29,18 @@ h1 {
   padding: 0.512em; /* 19.2 / 37.5 = 0.512em */
 }
 
+.title-nav {
+  display: flex;
+  flex-direction: row;
+  font-size: 37.5px; /* 37.5 / 24 = 1.5625em */
+  justify-content: center;
+  text-decoration: none;
+  line-height: 1.28em; /* 48 / 37.5 = 1.28em */
+  padding: 0.512em; /* 19.2 / 37.5 = 0.512em */
+  color: rgb(245, 245, 245); /* Light Grey */
+}
+
+
 h2 {
   font-size: 1.25em; /* 30 / 24 = 1.25em */
   line-height: 1.2em; /* 36 / 30 = 1.2em */
@@ -484,6 +496,12 @@ li.active a {
     padding: 0.457142857em; /* 19.2 / 42 = 0.457142857em */
   }
 
+  .title-nav {
+    font-size: 1.75em; /* 42 / 24 = 1.75em */
+    line-height: 1.142857em; /* 48 / 42 = 1.142857em */
+    padding: 0.457142857em; /* 19.2 / 42 = 0.457142857em */
+  }
+
   .js #bag input {
     visibility: hidden;
   }
@@ -498,6 +516,12 @@ li.active a {
 @media screen and (min-width: 13.875em) /* 222px = 13.875em */ {
 
   h1 {
+    font-size: 1.5625em; /* 37.5 / 24 = 1.5625em */
+    line-height: 1.28em; /* 48 / 37.5 = 1.28em */
+    padding: 0.512em; /* 19.2 / 37.5 = 0.512em */
+  }
+
+  .title-nav {
     font-size: 1.5625em; /* 37.5 / 24 = 1.5625em */
     line-height: 1.28em; /* 48 / 37.5 = 1.28em */
     padding: 0.512em; /* 19.2 / 37.5 = 0.512em */
@@ -681,6 +705,12 @@ li.active a {
 @media screen and (min-width: 45em)  /* 720px = 45em */ {
 
   h1 {
+    font-size: 1.953125em; /* 46.875 / 24 = 1.953125em*/
+    line-height: 1.024em; /* 48 / 46.875 = 1.024em */
+    padding: 0.40959999999999996em; /* 19.2 / 46.875 = 0.40959999999999996em */
+  }
+
+  .title-nav {
     font-size: 1.953125em; /* 46.875 / 24 = 1.953125em*/
     line-height: 1.024em; /* 48 / 46.875 = 1.024em */
     padding: 0.40959999999999996em; /* 19.2 / 46.875 = 0.40959999999999996em */
