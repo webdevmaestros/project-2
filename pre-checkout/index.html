@@ -11,9 +11,14 @@
       <h1>The Store Company</h1>
       <nav id="navigation">
         <ul class="nav-info">
+<<<<<<< HEAD
           <li class="active"><a href="./">Shipping</a></li>
           <li><a href="billing/">Billing</a></li>
           <li><a href="payment/">Payment</a></li>
+=======
+          <li><a href="../store/">Shop All</a></li>
+          <li class="active"><a href="../pre-checkout/">See Cart</a></li>
+>>>>>>> upstream/main
         </ul>
       </nav>
     </header>
@@ -21,6 +26,7 @@
       <header>
         <h2>Your Cart</h2>
       </header>
+<<<<<<< HEAD
       <ul>
         <li>
           <article class="summ-item">
@@ -101,6 +107,21 @@
           </article>
         </li>
       </ul>
+=======
+      <form action="../" id="pre-checkout-form">
+        <fieldset name="pre-checkout-form">
+          <ul id="order-info" class="items">
+          </ul>
+        </fieldset>
+        <ul id="nextpage">
+        <li>
+          <h4>
+            <button type="submit" id="submit" value="Continue to Checkout">Continue to Checkout</button>
+          </h4>
+        </li>
+        </ul>
+      </form>
+>>>>>>> upstream/main
       <aside id="price-info">
         <section id="summary">
           <h3>Summary</h3>
@@ -117,6 +138,7 @@
                 <p>$X</p>
               </header>
             </li>
+<<<<<<< HEAD
             <li>
               <header id="shipping">
                 <h4>Shipping</h4>
@@ -135,13 +157,22 @@
                 <p>$X</p>
               </header>
             </li>
+=======
+>>>>>>> upstream/main
           </ul>
         </section>
       </aside>
     </main>
+<<<<<<< HEAD
     <footer id="footer" class="shipping">
       Site copyright Cyrus Herrera 2022
     </footer>
     <script src="assets/js/main.js"></script>
+=======
+    <footer id="footer" class="pre-checkout">
+      Site copyright Cyrus Herrera 2022
+    </footer>
+    <script src="../assets/js/main.js"></script>
+>>>>>>> upstream/main
   </body>
 </html>

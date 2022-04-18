@@ -11,10 +11,8 @@
       <h1>The Store Company</h1>
       <nav id="navigation">
         <ul class="nav-info">
-          <li><a href="/">Shopping Cart</a></li>
-          <li><a href="../">Shipping</a></li>
-          <li><a href="../billing/">Billing</a></li>
-          <li><a href="../payment/">Payment</a></li>
+          <li class="active"><a href="../store/">Shop All</a></li>
+          <li><a href="../pre-checkout/">See Cart</a></li>
         </ul>
       </nav>
     </header>
@@ -22,17 +20,19 @@
       <header id="label-cart">
         <h2>Items Avaliable</h2>
       </header>
-      <ul class="items">
+      <ul id="order-info" class="items">
         <li>
           <article id="item-1">
             <header class="item-name">
               <h4>Apple</h4>
             </header>
             <figure>
-              <img src="../assets/images/apple.png" alt="Apple" aria-labelledby="item-name"/>
+              <img src="../assets/images/apple.png" alt="Apple" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="a0001" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0001" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -41,10 +41,12 @@
               <h4>Banana</h4>
             </header>
             <figure>
-              <img src="../assets/images/banana.png" alt="Banana" aria-labelledby="item-name"/>
+              <img src="../assets/images/banana.png" alt="Banana" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="a0002" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0002" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -53,10 +55,12 @@
               <h4>Orange</h4>
             </header>
             <figure>
-              <img src="../assets/images/orange.png" alt="Oranges" aria-labelledby="item-name"/>
+              <img src="../assets/images/orange.png" alt="Orange" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.89</p>
+            <input type="checkbox" id="a0003" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0003" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -65,10 +69,12 @@
               <h4>Kiwi</h4>
             </header>
             <figure>
-              <img src="../assets/images/kiwi.png" alt="Kiwi" aria-labelledby="item-name"/>
+              <img src="../assets/images/kiwi.png" alt="Kiwi" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$1.49</p>
+            <input type="checkbox" id="a0004" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0004" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -77,10 +83,12 @@
               <h4>Blueberries</h4>
             </header>
             <figure>
-              <img src="../assets/images/blueberry.png" alt="Blueberries" aria-labelledby="item-name"/>
+              <img src="../assets/images/blueberry.png" alt="Blueberries" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="a0005" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0005" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -89,10 +97,12 @@
               <h4>Pear</h4>
             </header>
             <figure>
-              <img src="../assets/images/pear.png" alt="Pear" aria-labelledby="item-name"/>
+              <img src="../assets/images/pear.png" alt="Pear" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$0.99</p>
+            <input type="checkbox" id="a0006" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0006" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -101,10 +111,12 @@
               <h4>Grapes</h4>
             </header>
             <figure>
-              <img src="../assets/images/grapes.png" alt="Grapes" aria-labelledby="item-name"/>
+              <img src="../assets/images/grapes.png" alt="Grapes" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$1.99</p>
+            <input type="checkbox" id="a0007" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0007" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -113,10 +125,12 @@
               <h4>Strawberries</h4>
             </header>
             <figure>
-              <img src="../assets/images/strawberry.png" alt="Strawberries" aria-labelledby="item-name"/>
+              <img src="../assets/images/strawberry.png" alt="Strawberries" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="a0008" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0008" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -125,10 +139,12 @@
               <h4>Lychee</h4>
             </header>
             <figure>
-              <img src="../assets/images/lychee.png" alt="Lychee" aria-labelledby="item-name"/>
+              <img src="../assets/images/lychee.png" alt="Lychee" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$2.99</p>
+            <input type="checkbox" id="a0009" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0009" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -137,10 +153,12 @@
               <h4>Blackberries</h4>
             </header>
             <figure>
-              <img src="../assets/images/blackberry.png" alt="Blackberries" aria-labelledby="item-name"/>
+              <img src="../assets/images/blackberry.png" alt="Blackberries" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.49</p>
+            <input type="checkbox" id="a0010" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0010" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -149,10 +167,12 @@
               <h4>Coconut</h4>
             </header>
             <figure>
-              <img src="../assets/images/coconut.png" alt="Coconut" aria-labelledby="item-name"/>
+              <img src="../assets/images/coconut.png" alt="Coconut" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.79</p>
+            <input type="checkbox" id="a0011" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0011" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
         <li>
@@ -161,17 +181,30 @@
               <h4>Dragonfruit</h4>
             </header>
             <figure>
-              <img src="../assets/images/dragon-fruit.png" alt="Dragonfruit" aria-labelledby="item-name"/>
+              <img src="../assets/images/dragon-fruit.png" alt="Dragonfruit" />
               <figcaption></figcaption>
             </figure>
             <p class="price">$3.99</p>
+            <input type="checkbox" id="a0012" class="item-button" value="Add Item to Cart" />
+            <input hidden type="button" id="b0012" class="item-button" value="Remove Item from Cart" />
           </article>
         </li>
       </ul>
-    </section>
+      <form id="processed" action="../pre-checkout/">
+        <fieldset name="shopping-form">
+          <ul id="nextpage">
+            <li>
+              <h4>
+                <button type="submit" id="submit" value="Continue to Cart">Continue to Cart</button>
+              </h4>
+            </li>
+          </ul>
+        </fieldset>
+      </form>
     </main>
-    <footer id="footer" class="confirm">
+    <footer id="footer" class="shopping">
       Site copyright Cyrus Herrera 2022
     </footer>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>

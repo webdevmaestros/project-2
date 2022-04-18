@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@200&family=Montserrat:wght@200&display=swap');
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -10,9 +11,13 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 
 html {
   background-color: rgb(245, 245, 245); /* Light Grey */
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Commissioner', sans-serif;
   font-size: 1.5em; /* 24/16 = 1.5em */
   line-height: 1.2em; /* 28.8/ 24 = 1.2em */
+}
+
+header {
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -54,6 +59,12 @@ p {
   font-size: 0.64em; /* 15.36 / 24 = 0.64em */
   padding-bottom: 0.78125em; /*12 / 15.36 = 0.78125em */
   padding-left: 1.25em; /* 19.2 / 15.36 = 0.78125em */
+}
+
+button {
+  font-family: 'Commissioner', Arial, sans-serif;
+  padding: 0.512em;
+  border: none;
 }
 
 * {
@@ -190,8 +201,6 @@ fieldset ol {
   color: rgb(245, 245, 245); /* Light Grey */
   position: absolute;
   right: 1.45em;
-  margin-top: 51.5em;
-  width: 11em;
 }
 
 #submit:active {
@@ -210,7 +219,7 @@ fieldset ol {
 }
 
 .js #submit {
-  margin-top: 27em;
+  margin-top: 1em;
 }
 
 #submit:disabled:active {
@@ -446,6 +455,16 @@ li.active a {
   grid-area: phone;
 }
 
+#confirm section {
+  margin-bottom: 2em; /* 48/ 24 = 2em */
+}
+
+#confirm h3 {
+  color: rgb(0, 157, 224);
+  font-weight: bold;
+  letter-spacing: 0.0625em /*1.5/24 == 0.0625em*/ ;
+}
+
 @media screen and (min-width: 12.625em) /* 202px = 12.625em */ {
 
   h1 {
@@ -456,6 +475,11 @@ li.active a {
 
   .js #bag input {
     left: 6em;
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
   }
 
 }
@@ -474,33 +498,44 @@ li.active a {
     top: 4.75em;
   }
 
-  #conetent {
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
+  }
+
+  #content {
     position: relative;
   }
 
 }
 
 @media screen and (min-width: 15.25em) /* 244px = 15.25em */ {
+
   #submit {
     margin-top: 49em;
   }
 
   .js #submit {
-    margin-top: 23.5em;
+    margin-top: 25em;
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
   }
 }
 
 @media screen and (min-width: 20.625em) /* 330px = 20.625em */ {
 
-  .confirm ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
   .js #bag input {
     left: -3.5em;
     max-width: 5em;
     top: 9.25em;
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
   }
 
   .js #cart {
@@ -528,20 +563,20 @@ li.active a {
   }
 
   .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
   }
 
   .js .items {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
     padding: 0.5em;
   }
 
   #submit {
-    margin-top: 36.75em;
+    margin-top: 20em;
   }
 
   #proceed #submit {
@@ -564,6 +599,10 @@ li.active a {
   .js #bag input {
     top: 5.25em;
   }
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
+  }
 
 }
 
@@ -571,6 +610,11 @@ li.active a {
 
   .js #bag input {
     top: 6em;
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: block;
   }
 
   h3 {
@@ -610,6 +654,11 @@ li.active a {
     display: grid;
     gap: 0.5em;
     grid-template-columns: 1fr 1fr;
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: grid;
   }
 
 }
@@ -666,6 +715,21 @@ li.active a {
     text-align: left;
   }
 
+  /* checkmark when added to cart*/
+  .item-button[type="image"] {
+  max-width: 10em; /* 240 / 24 = 10em*/
+  }
+
+  fieldset ol {
+    column-gap: 0.5em;
+    display: grid;
+  }
+
+  .items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   .js .items {
     justify-content: space-around;
   }
@@ -695,7 +759,7 @@ li.active a {
 
   .js footer {
     position: absolute;
-    top: 67em;
+    top: 110em;
   }
 
   footer.billing {
@@ -717,10 +781,11 @@ li.active a {
   #submit {
     width: 35.25%;
     margin-top: -22.75em;
+
   }
 
   .js #submit {
-    margin-top: -16.5em;
+    margin-top: 7em;
   }
 
   #billing-form #submit {
@@ -742,6 +807,12 @@ li.active a {
   #price-values {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .confirm ul {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    padding-bottom: 1.66666667em /*40px/24 == 1.66666667em*/;
   }
 
 }
