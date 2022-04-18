@@ -493,7 +493,7 @@ function updateQty() {
       updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
     } catch (e) {
       console.log("Could not display total")
-    } 
+    }
     if (tax !== 0){
       updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
     }
@@ -776,7 +776,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   if (footercls === "shipping") {
-    fetch('../assets/items/data-root.txt')
+    fetch('/project-2/assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
       })
