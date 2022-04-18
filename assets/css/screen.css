@@ -474,7 +474,7 @@ li.active a {
   }
 
   .js #bag input {
-    left: 6em;
+    visibility: hidden;
   }
 
   fieldset ol {
@@ -493,9 +493,7 @@ li.active a {
   }
 
   .js #bag input {
-    left: 9.75em;
-    max-width: 4em;
-    top: 4.75em;
+    visibility: hidden;
   }
 
   fieldset ol {
@@ -528,9 +526,10 @@ li.active a {
 @media screen and (min-width: 20.625em) /* 330px = 20.625em */ {
 
   .js #bag input {
+    visibility: visible;
     left: -3.5em;
     max-width: 5em;
-    top: 9.25em;
+    margin-top: -10em;
   }
 
   fieldset ol {
@@ -597,7 +596,7 @@ li.active a {
 @media screen and (min-width: 23.25em) /* 372px = 23.25em */ {
 
   .js #bag input {
-    top: 5.25em;
+    margin-top: -10em;
   }
   fieldset ol {
     column-gap: 0.5em;
@@ -609,7 +608,7 @@ li.active a {
 @media screen and (min-width: 26.25em)  /* 420px = 26.25em */ {
 
   .js #bag input {
-    top: 6em;
+    margin-top: -10em;
   }
 
   fieldset ol {
