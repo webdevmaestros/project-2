@@ -528,9 +528,10 @@ li.active a {
     margin-top: 25em;
   }
 
-  .js #store-submit {
+  /* .js #store-submit {
     margin-top: 2em;
-  }
+  } 
+  STORE BUTTON */
 
   fieldset ol {
     column-gap: 0.5em;
