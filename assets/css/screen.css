@@ -70,7 +70,6 @@ button {
 .item-button{
   font-family: 'Commissioner', Arial, sans-serif;
   padding: 0.512em;
-  width: 13.5em;
 }
 
 * {
@@ -205,7 +204,8 @@ fieldset ol {
   text-align: center;
 }
 
-#submit {
+#submit,
+#store-submit {
   background-color: rgb(0, 157, 224);
   border: 0.1em solid rgb(59, 59, 59);
   border-radius: 0.25em;
@@ -526,6 +526,10 @@ li.active a {
 
   .js #submit {
     margin-top: 25em;
+  }
+
+  .js #store-submit {
+    margin-top: 2em;
   }
 
   fieldset ol {
