@@ -27,15 +27,21 @@ var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
 var buyInput = ""; // Selects all inputs for the shop all page
+var setItem = ""; // Selects items in users cart
+var remove = ""; // Sets the remove button for items in a users cart
+var removeButton = ""; // Grabs remove button from DOM
+var preCart = document.querySelector('#pre-checkout-form'); // Pre-checkout Cart values
 var itemList = ""; // List of items in cart
 var atcl = ""; // Defines each item
 var hdr = ""; // Header for each item
 var h = ""; // Name for each item
 var para = ""; // Price for each item
 var slc = ""; // Select qty for each item
-var opt = ""; // qty value for each item
+var opt = ""; // Qty value for each item
 var fig = ""; // Figure for an image
 var image = ""; // Image for items
+var rmv = ""; // Button to remove items from cart
+var cnfqty = ""; // Qty value for confirm page
 var itemIndex = ""; // Index of the item such as a0001 for apple
 var footercls = document.querySelector("footer").className; // class of the footer used to select a page
 // Used by for statements
@@ -53,7 +59,11 @@ var cartItemsArr = [];
 var allItemsArr = [];
 var selectedItemArr = [];
 
-contButton.setAttribute("disabled", "true");
+try {
+  contButton.setAttribute("disabled", "true");
+} catch (e) {
+  console.log("Could not disable contButton")
+}
 
 // Set these variables when on form pages
 
@@ -361,6 +371,8 @@ function payData() {
   // Remove all non-digits from Month and Year value
   cardDate = paymentDataArr[1].replace(/\D/g, '');
 
+
+
   // If Month and Year is 4 digits long, add a "/" between them
   if (cardDate.length === 4) {
     paymentDataArr[1] = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
@@ -370,7 +382,8 @@ function payData() {
   // If payment data is verified, enable continue button
   if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
       cardDate.length === 4 && paymentDataArr[2].length >= 3 &&
-      paymentDataArr[2].length <= 4) {
+      paymentDataArr[2].length <= 4 && paymentDataArr[3].indexOf(' ') > 0 &&
+      paymentDataArr[3].indexOf(' ') + 1 < paymentDataArr[3].length) {
 
     try {
       contButton.removeAttribute("disabled");
@@ -402,14 +415,6 @@ try {
   console.log("Could not load button variables");
 }
 
-// If not on the confirm page, add prices to an array and local storage
-if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
-  for (i = 0; i < strPrice.length; i++) {
-    priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
-  }
-  localStorage.setItem("localNormPriceData", priceArr);
-}
-
 // Show cart when screen is 720px or 45em wide
 window.addEventListener('resize', displayCart);
 
@@ -424,6 +429,14 @@ function displayCart() {
   }
 }
 
+// If not on the confirm page, add prices to an array and local storage
+if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
+  for (i = 0; i < strPrice.length; i++) {
+    priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
+  }
+  localStorage.setItem("localNormPriceData", priceArr);
+}
+
 // Set normal price as the subtotal
 for (i = 0; i < strPrice.length; i++) {
   normPrice[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
@@ -433,37 +446,14 @@ for (i = 0; i < strPrice.length; i++) {
 
 if (typeof(localStorage.localNormPriceData) === "string") {
   for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
-    console.log("HI");
     normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
     updatePrice[i] = normPrice[i];
     sub += updatePrice[i];
   }
 }
 
-// If qty has been changed update the subtotal
-if (typeof(localStorage.localQtyData) === "string" && confirmPage !== "confirm") {
-  try {
-    sub = 0;
-    for (i = 0; i < strPrice.length; i++) {
-      qty[i].value = localStorage.localQtyData.split(",")[i];
-      updatePrice[i] = normPrice[i] * parseInt(qty[i].value);
-      strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
-      sub += updatePrice[i];
-    }
-  } catch (e) {
-    console.log("Could not update prices");
-  }
-}
-
-// If shipping data exist update the country and state names
-if (typeof(localStorage.localShippingData) === "string") {
-  cont = localStorage.localShippingData.split(",")[2];
-  state = localStorage.localShippingData.split(",")[3];
-  otherPrice();
-}
-
 // If shipping data exist update summary values
-if (typeof(localStorage.localShippingData) === "string") {
+if (typeof(localStorage.localShippingData) === "string" && footercls !== "shopping" && footercls !== "pre-checkout") {
   updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
   updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
   updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
@@ -474,6 +464,12 @@ try {
   updateCart.addEventListener('input', updateQty);
 } catch (e) {
   console.log("Could not addEventListener to the cart");
+}
+
+try {
+  preCart.addEventListener('input', updateQty);
+} catch (e) {
+  console.log("Could not addEventListener to the pre checkout cart");
 }
 
 try {
@@ -488,16 +484,22 @@ function updateQty() {
   if (confirmPage !== "confirm") {
     sub = 0;
     for (i = 0; i < qty.length; i++) {
-      updatePrice[i] = normPrice[i] * parseInt(qty[i].value);
+      console.log(qty[i].value)
+      updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
       strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
       qtyArr[i] = qty[i].value;
       sub += updatePrice[i];
     }
 
     localStorage.setItem("localQtyData", qtyArr);
+    console.log("THIS IS AWFUL")
 
     updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
-    updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+    try {
+      updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
+    } catch (e) {
+      console.log("Could not display total")
+    }
     if (tax !== 0){
       updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
     }
@@ -690,8 +692,12 @@ if (document.querySelector("#order-info").className === "confirm") {
 
 /* <--------------- Processed Data ---------------> */
 
-processed = document.querySelector("#processed input");
-save = document.querySelector("#check-to-fail");
+try {
+  processed = document.querySelector("#processed")[1];
+  save = document.querySelector("#check-to-fail");
+} catch (e) {
+  console.log("Could not set buttons for confirm page")
+}
 
 try {
   processed.addEventListener('click', processData);
@@ -730,10 +736,30 @@ if (confirmPage === "items") {
   }
 }
 
+if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping") {
+
+  cartItemsArr = [];
+
+  for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
+    setItem = document.querySelector("#" + localStorage.localCartItems.split(",")[i]);
+    remove = setItem.id.replace("a", "b");
+    removeButton = document.querySelector('#' + remove);
+
+    setItem.type = "image";
+    setItem.src = "../assets/images/check.png";
+    setItem.alt = "Item added to cart";
+
+    cartItemsArr[i] = setItem.id;
+
+    removeButton.removeAttribute('hidden');
+  }
+  localStorage.setItem("localCartItems", cartItemsArr);
+}
+
 function addToCart(a) {
   var itemClicked = a.target;
-  var remove = itemClicked.id.replace("a", "b");
-  var removeButton = document.querySelector('#' + remove);
+  remove = itemClicked.id.replace("a", "b");
+  removeButton = document.querySelector('#' + remove);
 
   itemClicked.type = "image";
   itemClicked.src = "../assets/images/check.png";
@@ -776,7 +802,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   if (footercls === "shipping") {
-    fetch('/project-2/assets/items/data-root.txt')
+    fetch('../assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
       })
@@ -809,6 +835,8 @@ function fetchComplete() {
     fig = document.createElement("figure");
     image = document.createElement("img");
     itemList = document.querySelector(".items");
+    rmv = document.createElement("input");
+    cnfqty = document.createElement("p");
 
     itemIndex = parseInt(cartItemsArr[i].replace("a", ""));
     selectedItemArr = allItemsArr[itemIndex-1].split(",");
@@ -822,6 +850,11 @@ function fetchComplete() {
     para.innerHTML = selectedItemArr[3];
     slc.name = "qty";
     slc.classList = "qty";
+    rmv.type = "button"
+    rmv.id = "r" + i;
+    rmv.classList = "remove-button"
+    rmv.value = "Remove from cart"
+    cnfqty.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
     sub += parseFloat(selectedItemArr[3].replace("$", ""));
@@ -842,7 +875,12 @@ function fetchComplete() {
         opt.innerHTML = j.toString();
         slc.appendChild(opt.cloneNode(true));
       }
+      atcl.appendChild(rmv);
+      document.querySelectorAll(".remove-button")[i].addEventListener('click', removeItem);
+    } else {
+      atcl.appendChild(cnfqty);
     }
+
   }
 
   updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
@@ -850,13 +888,41 @@ function fetchComplete() {
 
   qty = document.querySelectorAll('.qty');
 
-  for (i = 0; i < qty.length; i++) {
-    qtyArr[i] = qty[i].value;
+  if (footercls === "pre-checkout") {
+
+    for (i = 0; i < qty.length; i++) {
+      qtyArr[i] = qty[i].value;
+    }
+
+    localStorage.setItem("localQtyData", qtyArr);
+
   }
 
-  localStorage.setItem("localQtyData", qtyArr);
-
   strPrice = document.querySelectorAll('.price'); // Original prices
+
+  // If qty has been changed update the subtotal
+
+  try {
+    sub = 0;
+    for (i = 0; i < strPrice.length; i++) {
+      qty[i].value = parseInt(localStorage.localQtyData.split(",")[i]);
+      if (confirmPage === "confirm") {
+        qty[i].innerHTML = "Qty: " + localStorage.localQtyData.split(",")[i];
+      }
+      updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
+      strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
+      sub += updatePrice[i];
+    }
+  } catch (e) {
+    console.log("Could not update prices");
+  }
+
+  // If shipping data exist update the country and state names
+  if (typeof(localStorage.localShippingData) === "string") {
+    cont = localStorage.localShippingData.split(",")[2];
+    state = localStorage.localShippingData.split(",")[3];
+    otherPrice();
+  }
 
   if (confirmPage !== "confirm") {
 
@@ -882,5 +948,21 @@ function fetchComplete() {
     updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
     updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
   }
+
+}
+
+function removeItem(rbutton) {
+  var index = parseInt(rbutton.target.id.replace("r", ""));
+
+  cartItemsArr.splice(index, 1);
+  localStorage.setItem("localCartItems", cartItemsArr);
+
+  document.querySelector(".items").children[index].remove();
+  priceArr = [];
+
+  for (i = 0; i < document.querySelector(".items").children.length; i++) {
+    priceArr[i] = parseFloat(document.querySelectorAll(".price")[i].innerHTML.replace("$", ""));
+  }
+  localStorage.setItem("localNormPriceData", priceArr);
 
 }
