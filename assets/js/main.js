@@ -27,6 +27,9 @@ var list = ""; // Separate sections of the confirm page
 var processed = ""; // Processed button
 var save = ""; // Checks to see if user data was saved to the server
 var buyInput = ""; // Selects all inputs for the shop all page
+var setItem = ""; // Selects items in users cart
+var remove = ""; // Sets the remove button for items in a users cart
+var removeButton = ""; // Grabs remove button from DOM
 var preCart = document.querySelector('#pre-checkout-form'); // Pre-checkout Cart values
 var itemList = ""; // List of items in cart
 var atcl = ""; // Defines each item
@@ -730,10 +733,30 @@ if (confirmPage === "items") {
   }
 }
 
+if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping") {
+
+  cartItemsArr = [];
+
+  for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
+    setItem = document.querySelector("#" + localStorage.localCartItems.split(",")[i]);
+    remove = setItem.id.replace("a", "b");
+    removeButton = document.querySelector('#' + remove);
+
+    setItem.type = "image";
+    setItem.src = "../assets/images/check.png";
+    setItem.alt = "Item added to cart";
+
+    cartItemsArr[i] = setItem.id;
+
+    removeButton.removeAttribute('hidden');
+  }
+  localStorage.setItem("localCartItems", cartItemsArr);
+}
+
 function addToCart(a) {
   var itemClicked = a.target;
-  var remove = itemClicked.id.replace("a", "b");
-  var removeButton = document.querySelector('#' + remove);
+  remove = itemClicked.id.replace("a", "b");
+  removeButton = document.querySelector('#' + remove);
 
   itemClicked.type = "image";
   itemClicked.src = "../assets/images/check.png";
@@ -776,7 +799,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
   }
 
   if (footercls === "shipping") {
-    fetch('/project-2/assets/items/data-root.txt')
+    fetch('../assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
       })
