@@ -94,8 +94,11 @@ if (formType === 'shipping-form') {
 }
 
 // Allow users to change qty amount
-for (i = 0; i < qty.length; i++) {
-  qty[i].removeAttribute("hidden");
+
+if (confirmPage !== "items") {
+  for (i = 0; i < qty.length; i++) {
+    qty[i].removeAttribute("hidden");
+  }
 }
 
 // Used for styling when JavaScript is present
@@ -492,7 +495,6 @@ function updateQty() {
     }
 
     localStorage.setItem("localQtyData", qtyArr);
-    console.log("THIS IS AWFUL")
 
     updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
     try {
@@ -722,6 +724,7 @@ function processData() {
 
 if (confirmPage === "items") {
   buyInput = document.querySelectorAll('.item-button');
+  qty = document.querySelectorAll('.qty');
 
   contButton.removeAttribute("disabled");
 
@@ -729,7 +732,6 @@ if (confirmPage === "items") {
     if (i % 2 === 0) {
       buyInput[i].type = "button";
       buyInput[i].addEventListener('click', addToCart);
-
     } else {
       buyInput[i].addEventListener('click', removeFromCart);
     }
@@ -751,9 +753,25 @@ if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping"
 
     cartItemsArr[i] = setItem.id;
 
+    setItem.parentElement.querySelector('.qty').removeAttribute('hidden');
     removeButton.removeAttribute('hidden');
   }
   localStorage.setItem("localCartItems", cartItemsArr);
+}
+
+if (footercls === "shopping") {
+  console.log("HERE")
+  for (i = 0; i < qty.length; i++) {
+    qty[i].addEventListener('input', storeQty);
+  }
+}
+
+function storeQty() {
+  console.log("TESTING")
+  for (i = 0; i < cartItemsArr.length; i++) {
+    qtyArr[i] = document.querySelector('#' + cartItemsArr[i]).parentElement.querySelector('.qty').value
+  }
+  localStorage.setItem("localQtyData", qtyArr);
 }
 
 function addToCart(a) {
@@ -768,7 +786,7 @@ function addToCart(a) {
   cartItemsArr.push(itemClicked.id);
   localStorage.setItem("localCartItems", cartItemsArr);
 
-
+  itemClicked.parentElement.querySelector('.qty').removeAttribute('hidden');
   removeButton.removeAttribute('hidden');
 }
 
@@ -785,6 +803,14 @@ function removeFromCart(b) {
   cartItemsArr.splice(index, 1);
   localStorage.setItem("localCartItems", cartItemsArr);
 
+  try {
+    qtyArr.splice(index, 1);
+    localStorage.setItem("localQtyData", qtyArr);
+  } catch (e) {
+    console.log("Could not remove qty data")
+  }
+
+  itemClicked.parentElement.querySelector('.qty').setAttribute('hidden', 'true');
   itemClicked.setAttribute('hidden', 'true');
 }
 
@@ -888,7 +914,7 @@ function fetchComplete() {
 
   qty = document.querySelectorAll('.qty');
 
-  if (footercls === "pre-checkout") {
+  if (footercls === "pre-checkout" && typeof(localStorage.localQtyData) !== "string") {
 
     for (i = 0; i < qty.length; i++) {
       qtyArr[i] = qty[i].value;
