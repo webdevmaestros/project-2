@@ -789,7 +789,10 @@ function addToCart(a) {
   itemClicked.alt = "Item added to cart";
 
   cartItemsArr.push(itemClicked.id);
+  qtyArr.push("1");
+
   localStorage.setItem("localCartItems", cartItemsArr);
+  localStorage.setItem("localQtyData", qtyArr);
 
   itemClicked.parentElement.querySelector('.qty').removeAttribute('hidden');
   removeButton.removeAttribute('hidden');
