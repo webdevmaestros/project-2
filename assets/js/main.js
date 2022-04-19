@@ -73,6 +73,14 @@ try {
     formLength = document.forms[0].length - 2;
     formType = document.forms[0].id;
 
+    for (i = 0; i < formLength; i++) {
+      try {
+        formData.children[i].children[1].setCustomValidity(formData.children[i].getAttribute('data-error'));
+      } catch (e) {
+        console.log("Error messages could not be updated");
+      }
+    }
+
   } else {
     contButton.removeAttribute("disabled");
   }
@@ -197,6 +205,7 @@ function shpData(x) {
     for (i = 0; i < formLength; i++) {
       shipDataArr[i] = formData.children[i].children[1].value;
     }
+
   }
 
   phoneNumber = shipDataArr[9];
