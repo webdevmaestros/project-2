@@ -10,7 +10,7 @@ describe ('Landing Page', function() {
     it('if the form is empty it is not submittable', function(browser) {
       browser
         .url('http://localhost:8080/')
-        .click('input.submit')
+        .click('button.submit')
         .assert
           .urlEquals('http://localhost:8080/');
     });
@@ -30,7 +30,7 @@ describe ('Billing Page', function() {
     it('if the form is empty it is not submittable', function(browser) {
       browser
         .url('http://localhost:8080/billing/')
-        .click('input.submit')
+        .click('button.submit')
         .assert
           .urlEquals('http://localhost:8080/billing/');
     });
