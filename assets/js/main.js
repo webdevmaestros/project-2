@@ -432,36 +432,6 @@ function displayCart() {
   }
 }
 
-// If not on the confirm page, add prices to an array and local storage
-if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
-  for (i = 0; i < strPrice.length; i++) {
-    priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
-  }
-  localStorage.setItem("localNormPriceData", priceArr);
-}
-
-// Set normal price as the subtotal
-for (i = 0; i < strPrice.length; i++) {
-  normPrice[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
-  updatePrice[i] = normPrice[i];
-  sub += updatePrice[i];
-}
-
-if (typeof(localStorage.localNormPriceData) === "string") {
-  for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
-    normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
-    updatePrice[i] = normPrice[i];
-    sub += updatePrice[i];
-  }
-}
-
-// If shipping data exist update summary values
-if (typeof(localStorage.localShippingData) === "string" && footercls !== "shopping" && footercls !== "pre-checkout") {
-  updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
-  updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
-  updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
-  updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
-}
 
 try {
   updateCart.addEventListener('input', updateQty);
