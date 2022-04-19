@@ -305,7 +305,7 @@ if (typeof(localStorage.localBillingData) === "string" && formType === 'billing-
   }
 
   for (i = 1; i < formLength; i++) {
-    formData.children[i].children[1].value = localStorage.localShippingData.split(",")[i-1];
+    formData.children[i].children[1].value = localStorage.localBillingData.split(",")[i-1];
   }
 
   navPick.children[2].innerHTML = "<a href=\"../payment/\">Payment</a>";
