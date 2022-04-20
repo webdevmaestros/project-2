@@ -755,7 +755,7 @@ if (footercls === "pre-checkout" || footercls === "shipping" ||
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
   }
 
-  if (footercls === "shipping") {
+  if (footercls === "shopping") {
     fetch('../assets/items/data-root.txt')
       .then(function pullData(response){
         return response.text();
