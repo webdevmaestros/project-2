@@ -145,10 +145,9 @@ input, #country-name {
   padding-top: 0.4em;
 }
 
-.sdij form input {
-  border: 2px solid grey;
-  border-radius: 4px;
-  display: block;
+article input {
+  margin: 1em;
+  
 }
 
 .items article {
