@@ -85,6 +85,32 @@ button {
   border: none;
 }
 
+#order-info.items input[type="button"] {
+  display: none;
+}
+
+.js #order-info.items input[type="button"] {
+  display: block;
+}
+
+#order-info.items li {
+  display: grid;
+  justify-content: center;
+}
+
+.js #order-info.items li {
+  display: block;
+}
+
+#order-info.items input[type="checkbox"],
+#order-info.items header,
+#order-info.items figure,
+#order-info.items p {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .item-button{
   font-family: 'Commissioner', Arial, sans-serif;
   padding: 0.512em;
@@ -119,7 +145,7 @@ input, #country-name {
   padding-top: 0.4em;
 }
 
-form input {
+.sdij form input {
   border: 2px solid grey;
   border-radius: 4px;
   display: block;
@@ -226,10 +252,11 @@ fieldset ol {
 .js #bag input {
   display: block;
   position: absolute;
-  top: 4em;
-  left: 4em;
-  margin-left: 4em;
+  margin-top: 4em;
+  right: 0;
   max-width: 5em;
+  filter: invert(75%);
+  -webkit-filter: invert(75%);
 }
 
 .js #cart {
@@ -401,8 +428,10 @@ li.active a {
     "state state state"
     "city city city"
     "address address address"
-    "zip apt apt"
-    "cc phone phone";
+    "zip zip zip"
+    "apt apt apt"
+    "cc cc cc"
+    "phone phone phone";
 
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -552,9 +581,7 @@ li.active a {
     padding: 0.457142857em; /* 19.2 / 42 = 0.457142857em */
   }
 
-  .js #bag input {
-    visibility: hidden;
-  }
+
 
   fieldset ol {
     column-gap: 0.5em;
@@ -578,7 +605,7 @@ li.active a {
   }
 
   .js #bag input {
-    visibility: hidden;
+    top: 0;
   }
 
   fieldset ol {
@@ -594,13 +621,6 @@ li.active a {
 
 @media screen and (min-width: 15.25em) /* 244px = 15.25em */ {
 
-
-
-  /* .js #store-submit {
-    margin-top: 2em;
-  }
-  STORE BUTTON */
-
   fieldset ol {
     column-gap: 0.5em;
     display: block;
@@ -611,9 +631,12 @@ li.active a {
 
   .js #bag input {
     visibility: visible;
-    left: -3.5em;
+    left: 0;
+    margin-top: auto;
     max-width: 5em;
-    margin-top: -10em;
+    top: -5em;
+    filter: invert(0%);
+    -webkit-filter: invert(0%);
   }
 
   fieldset ol {
@@ -645,9 +668,6 @@ li.active a {
     padding: 0.25em;
   }
 
-  #submit {
-    margin-top: 20em;
-  }
 
   #proceed #submit {
     width: 8em;
@@ -666,9 +686,6 @@ li.active a {
 
 @media screen and (min-width: 23.25em) /* 372px = 23.25em */ {
 
-  .js #bag input {
-    margin-top: -10em;
-  }
   fieldset ol {
     column-gap: 0.5em;
     display: block;
@@ -677,10 +694,6 @@ li.active a {
 }
 
 @media screen and (min-width: 26.25em)  /* 420px = 26.25em */ {
-
-  .js #bag input {
-    margin-top: -10em;
-  }
 
   fieldset ol {
     column-gap: 0.5em;
@@ -853,8 +866,9 @@ li.active a {
   }
 
   #processed {
-    grid-column-start: 2;
-    grid-row-start: 3;
+    grid-column-start: 1;
+    grid-column-end: span 2;
+    grid-row-start: 2;
   }
 
   aside {

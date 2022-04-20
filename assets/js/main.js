@@ -678,8 +678,10 @@ if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping"
 }
 
 if (footercls === "shopping") {
+  document.querySelector('#processed').action = "../pre-checkout/"
   for (i = 0; i < qty.length; i++) {
     qty[i].addEventListener('input', storeQty);
+    qty[i].removeAttribute("disabled");
   }
 }
 
