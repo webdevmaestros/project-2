@@ -49,7 +49,6 @@ var j = 0;
 // Arrays
 var shipDataArr = []; // Used by shipping and billing
 var paymentDataArr = [];
-var normPrice = [];
 var updatePrice = [];
 var qtyArr = [];
 var priceArr = [];
@@ -131,7 +130,6 @@ try {
 
 function shpData(x) {
   var type = x.target.parentElement.parentElement.parentElement.name; // Either Shipping or Billing form
-  var verifyData = 0; // Verify phone and email formatting
   var checked = ""; // Check for same as shipping
   var atIndex = ""; // The index of @ in the email string
   var dotIndex = ""; // The index of . in the email string
@@ -188,7 +186,7 @@ function shpData(x) {
       x.target.removeAttribute('class');
     }
   } catch (e) {
-    console.log("Could not set validation error attribute")
+    console.log("Could not set validation error attribute");
   }
 
   phoneNumber = shipDataArr[9];
@@ -310,7 +308,7 @@ function payData(x) {
       x.target.removeAttribute('class');
     }
   } catch (e) {
-    console.log("Could not set validation error attribute")
+    console.log("Could not set validation error attribute");
   }
 
   if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
@@ -407,7 +405,7 @@ function updateQty() {
   if (confirmPage !== "confirm") {
     sub = 0;
     for (i = 0; i < qty.length; i++) {
-      console.log(qty[i].value)
+      console.log(qty[i].value);
       updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
       strPrice[i].innerHTML = "$" + updatePrice[i].toFixed(2);
       qtyArr[i] = qty[i].value;
@@ -420,7 +418,7 @@ function updateQty() {
     try {
       updateSummary.children[3].children[0].children[1].innerHTML = "$" + ((tax * sub) + sub + shipping).toFixed(2);
     } catch (e) {
-      console.log("Could not display total")
+      console.log("Could not display total");
     }
     if (tax !== 0){
       updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
@@ -618,7 +616,7 @@ try {
   processed = document.querySelector("#processed")[1];
   save = document.querySelector("#check-to-fail");
 } catch (e) {
-  console.log("Could not set buttons for confirm page")
+  console.log("Could not set buttons for confirm page");
 }
 
 try {
@@ -641,7 +639,7 @@ function processData() {
       document.querySelector("#processed").setAttribute("action", "../failed/");
     }
   } else if (footercls === "shopping") {
-    document.querySelector('#processed').action = "../pre-checkout/"
+    document.querySelector('#processed').action = "../pre-checkout/";
   }
 }
 
@@ -741,7 +739,7 @@ function removeFromCart(b) {
     qtyArr.splice(index, 1);
     localStorage.setItem("localQtyData", qtyArr);
   } catch (e) {
-    console.log("Could not remove qty data")
+    console.log("Could not remove qty data");
   }
 
   itemClicked.parentElement.querySelector('.qty').setAttribute('hidden', 'true');
@@ -806,10 +804,10 @@ function fetchComplete() {
     para.innerHTML = selectedItemArr[3];
     slc.name = "qty";
     slc.classList = "qty";
-    rmv.type = "button"
+    rmv.type = "button";
     rmv.id = "r" + i;
-    rmv.classList = "remove-button"
-    rmv.value = "Remove"
+    rmv.classList = "remove-button";
+    rmv.value = "Remove";
     cnfqty.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
