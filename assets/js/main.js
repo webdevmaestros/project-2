@@ -283,7 +283,7 @@ try {
   console.log("Could not addEventListener to billingFormData variables");
 }
 
-function payData() {
+function payData(x) {
   var cardDate = ""; // Month and Year values on user's card
 
   // Change Month and Year type from number to text to allow for "/"
@@ -296,24 +296,60 @@ function payData() {
   // Remove all non-digits from Month and Year value
   cardDate = paymentDataArr[1].replace(/\D/g, '');
 
+  try {
+    if (x.target.checkValidity() === false) {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
+    } else if (x.target.checkValidity() === true) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
+    }
+  } catch (e) {
+    console.log("Could not set validation error attribute")
+  }
 
+  if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
+      x.target.id === "c-number") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if ((paymentDataArr[0].length < 13 || paymentDataArr[0].length > 19) &&
+      x.target.id === "c-number") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
+  }
 
   // If Month and Year is 4 digits long, add a "/" between them
-  if (cardDate.length === 4) {
+  if (cardDate.length === 4 && x.target.id === "exp-date") {
     paymentDataArr[1] = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
     formData.children[1].children[1].value = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if (cardDate.length !== 4 && x.target.id === "exp-date") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
+  }
+
+  if (paymentDataArr[2].length === 3 && paymentDataArr[2].length === 4 &&
+      x.target.id === "sec-code") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if (paymentDataArr[2].length !== 3 && paymentDataArr[2].length !== 4 &&
+      x.target.id === "sec-code") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
 
   // If payment data is verified, enable continue button
-  if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
-      cardDate.length === 4 && paymentDataArr[2].length >= 3 &&
-      paymentDataArr[2].length <= 4 && paymentDataArr[3].indexOf(' ') > 0 &&
-      paymentDataArr[3].indexOf(' ') + 1 < paymentDataArr[3].length) {
-
-    localStorage.setItem("localPaymentData", paymentDataArr);
-  } else {
-
+  if (paymentDataArr[3].indexOf(' ') > 0 && paymentDataArr[3].indexOf(' ') + 1
+      < paymentDataArr[3].length && x.target.id === "c-name") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if ((paymentDataArr[3].indexOf(' ') <= 0 || paymentDataArr[3].indexOf(' ') + 1
+      >= paymentDataArr[3].length) && x.target.id === "c-name"){
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
+  localStorage.setItem("localPaymentData", paymentDataArr);
 
 }
 
