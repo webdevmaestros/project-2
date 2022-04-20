@@ -629,14 +629,19 @@ try {
 
 function processData() {
   // This is where data would be sent to the remote server to be verified and saved
-  if (save.checked === false) {
-    console.log("Customer data was successfully saved");
-    localStorage.clear();
-    document.querySelector("#processed").setAttribute("action", "../processed/");
 
-  } else {
-    console.log("Failed to save Customer data");
-    document.querySelector("#processed").setAttribute("action", "../failed/");
+  if (footercls === "confirm") {
+    if (save.checked === false) {
+      console.log("Customer data was successfully saved");
+      localStorage.clear();
+      document.querySelector("#processed").setAttribute("action", "../processed/");
+
+    } else {
+      console.log("Failed to save Customer data");
+      document.querySelector("#processed").setAttribute("action", "../failed/");
+    }
+  } else if (footercls === "shopping") {
+    document.querySelector('#processed').action = "../pre-checkout/"
   }
 }
 
@@ -678,7 +683,8 @@ if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping"
 }
 
 if (footercls === "shopping") {
-  document.querySelector('#processed').action = "../pre-checkout/"
+  document.querySelector('#processed').action = "javascript:void(0);";
+  document.querySelector("#nextpage").addEventListener('click', processData);
   for (i = 0; i < qty.length; i++) {
     qty[i].addEventListener('input', storeQty);
     qty[i].removeAttribute("disabled");
