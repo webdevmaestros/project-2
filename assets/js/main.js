@@ -182,8 +182,10 @@ function shpData(x) {
   try {
     if (x.target.checkValidity() === false) {
       x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
     } else if (x.target.checkValidity() === true) {
       x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
     }
   } catch (e) {
     console.log("Could not set validation error attribute")
@@ -197,9 +199,11 @@ function shpData(x) {
     // Verify email formatting
     if (dotIndex !== atIndex + 1 && dotIndex !== -1 && dotIndex !== shipDataArr[1].length - 1) {
       x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
       // If failed, reset verification
     } else {
       x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
     }
   }
 
@@ -210,17 +214,20 @@ function shpData(x) {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[9].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
 
     } else if (type === "billing-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[10].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
     } else {
       x.target.parentElement.querySelector('p').removeAttribute('hidden');
     }
     // If failed, reset verification
   } else if (phoneNumber.replace(/\D/g, '').length !== 10 && x.target.id === "tel-national") {
     x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
 
 }
