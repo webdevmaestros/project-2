@@ -209,7 +209,6 @@ function shpData(x) {
 
   // Verify phone formatting for both Shipping and Billing
   if (phoneNumber.replace(/\D/g, '').length === 10 && x.target.id === "tel-national") {
-    console.log("I AM HERE")
     if (type === "shipping-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[9].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
@@ -228,6 +227,12 @@ function shpData(x) {
   } else if (phoneNumber.replace(/\D/g, '').length !== 10 && x.target.id === "tel-national") {
     x.target.parentElement.querySelector('p').removeAttribute('hidden');
     x.target.classList = "error";
+  }
+
+  if (type === "shipping-form") {
+    localStorage.setItem("localShippingData", shipDataArr);
+  } else if (type === "billing-form") {
+    localStorage.setItem("localBillingData", shipDataArr);
   }
 
 }
@@ -796,7 +801,7 @@ function fetchComplete() {
     rmv.type = "button"
     rmv.id = "r" + i;
     rmv.classList = "remove-button"
-    rmv.value = "Remove from cart"
+    rmv.value = "Remove"
     cnfqty.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
