@@ -2,7 +2,6 @@
 
 /* <--------------- Global Variables ---------------> */
 var navPick = document.querySelector('nav').children[0]; // Navigation
-var contButton = document.querySelector('#submit'); // Submit button
 var confirmPage = document.querySelector("#order-info").className; // Checks if user is on confirm page
 var qty = document.querySelectorAll('.qty'); // Cart quantity
 var formData = ""; // Data in the form
@@ -59,12 +58,6 @@ var cartItemsArr = [];
 var allItemsArr = [];
 var selectedItemArr = [];
 
-try {
-  contButton.setAttribute("disabled", "true");
-} catch (e) {
-  console.log("Could not disable contButton")
-}
-
 // Set these variables when on form pages
 
 try {
@@ -72,9 +65,6 @@ try {
     formData = document.forms[0].children[1].children[0];
     formLength = document.forms[0].length - 2;
     formType = document.forms[0].id;
-
-  } else {
-    contButton.removeAttribute("disabled");
   }
 
 } catch (e) {
@@ -94,8 +84,11 @@ if (formType === 'shipping-form') {
 }
 
 // Allow users to change qty amount
-for (i = 0; i < qty.length; i++) {
-  qty[i].removeAttribute("hidden");
+
+if (confirmPage !== "items") {
+  for (i = 0; i < qty.length; i++) {
+    qty[i].removeAttribute("hidden");
+  }
 }
 
 // Used for styling when JavaScript is present
@@ -122,12 +115,6 @@ if (typeof(localStorage.localShippingData) === "string" && formType === 'shippin
   navPick.children[1].innerHTML = "<a href=\"billing/\">Billing</a>";
   navPick.children[2].innerHTML = "<a href=\"payment/\">Payment</a>";
 
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not disable button");
-  }
-
 }
 
 try {
@@ -137,18 +124,13 @@ try {
 }
 
 try {
-  shippingFormData.addEventListener('input', fillShippingForm);
+  shippingFormData.addEventListener('input', shpData);
 } catch (e) {
   console.log("Could not addEventListener to shippingFormData variables");
 }
 
-function fillShippingForm() {
-  var a = shpData("shipping");
-  console.log(a + "form is active");
-}
-
 function shpData(x) {
-  var type = x; // Either Shipping or Billing form
+  var type = x.target.parentElement.parentElement.parentElement.name; // Either Shipping or Billing form
   var verifyData = 0; // Verify phone and email formatting
   var checked = ""; // Check for same as shipping
   var atIndex = ""; // The index of @ in the email string
@@ -194,96 +176,63 @@ function shpData(x) {
     for (i = 0; i < formLength; i++) {
       shipDataArr[i] = formData.children[i].children[1].value;
     }
+
+  }
+
+  try {
+    if (x.target.checkValidity() === false) {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
+    } else if (x.target.checkValidity() === true) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
+    }
+  } catch (e) {
+    console.log("Could not set validation error attribute")
   }
 
   phoneNumber = shipDataArr[9];
   atIndex = shipDataArr[1].indexOf("@");
   dotIndex = shipDataArr[1].indexOf(".");
 
-  // Verify email formatting
-  if (dotIndex !== atIndex + 1){
-    verifyData++;
-    // If failed, reset verification
-  } else {
-    verifyData = 0;
+  if (x.target.id === "email") {
+    // Verify email formatting
+    if (dotIndex !== atIndex + 1 && dotIndex !== -1 && dotIndex !== shipDataArr[1].length - 1) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
+      // If failed, reset verification
+    } else {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
+    }
   }
 
   // Verify phone formatting for both Shipping and Billing
-  if (phoneNumber.replace(/\D/g, '').length === 10) {
-    if (type === "shipping") {
+  if (phoneNumber.replace(/\D/g, '').length === 10 && x.target.id === "tel-national") {
+    if (type === "shipping-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[9].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-      verifyData++;
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
 
-    } else if (type === "billing") {
+    } else if (type === "billing-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[10].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-      verifyData++;
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
+    } else {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
     }
     // If failed, reset verification
-  } else {
-    verifyData = 0;
+  } else if (phoneNumber.replace(/\D/g, '').length !== 10 && x.target.id === "tel-national") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
 
-  // If on the shipping form check to verify it's data
-  if(type === "shipping") {
-
-    // If data is verified, open billing link
-    if (verifyData === 2) {
-      navPick.children[1].innerHTML = "<a href=\"./billing/\">Billing</a>";
-
-      // If billing data available , open payment link
-      if (typeof(localStorage.localBillingData) === "string") {
-        navPick.children[2].innerHTML = "<a href=\"./payment/\">Payment</a>";
-      }
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      localStorage.setItem("localShippingData", shipDataArr);
-
-    } else {
-      navPick.children[1].innerHTML = "";
-      navPick.children[2].innerHTML = "";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      contButton.setAttribute("disabled", "true");
-
-    }
-    // If on the billing form check to verify it's data
-  } else if (type === "billing") {
-    // If data is verified, open payment link
-    if (verifyData === 2) {
-      navPick.children[2].innerHTML = "<a href=\"../payment/\">Payment</a>";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      localStorage.setItem("localBillingData", shipDataArr);
-    } else {
-      navPick.children[2].innerHTML = "";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      contButton.setAttribute("disabled", "true");
-
-    }
-
+  if (type === "shipping-form") {
+    localStorage.setItem("localShippingData", shipDataArr);
+  } else if (type === "billing-form") {
+    localStorage.setItem("localBillingData", shipDataArr);
   }
 
 }
@@ -302,28 +251,15 @@ if (typeof(localStorage.localBillingData) === "string" && formType === 'billing-
   }
 
   for (i = 1; i < formLength; i++) {
-    formData.children[i].children[1].value = localStorage.localShippingData.split(",")[i-1];
-  }
-
-  navPick.children[2].innerHTML = "<a href=\"../payment/\">Payment</a>";
-
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not enable button");
+    formData.children[i].children[1].value = localStorage.localBillingData.split(",")[i-1];
   }
 
 }
 
 try {
-  billingFormData.addEventListener('input', fillBillingForm);
+  billingFormData.addEventListener('input', shpData);
 } catch (e) {
   console.log("Could addEventListener to billingFormData variables");
-}
-
-function fillBillingForm() {
-  var b = shpData("billing");
-  console.log(b + "form is active");
 }
 
 /* <--------------- Payment Data Storage ---------------> */
@@ -344,12 +280,6 @@ if (typeof(localStorage.localPaymentData) === "string" && formType === 'payment-
     formData.children[i].children[1].value = localStorage.localPaymentData.split(",")[i];
   }
 
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not set paymentFormData variables");
-  }
-
 }
 
 try {
@@ -358,7 +288,7 @@ try {
   console.log("Could not addEventListener to billingFormData variables");
 }
 
-function payData() {
+function payData(x) {
   var cardDate = ""; // Month and Year values on user's card
 
   // Change Month and Year type from number to text to allow for "/"
@@ -371,37 +301,60 @@ function payData() {
   // Remove all non-digits from Month and Year value
   cardDate = paymentDataArr[1].replace(/\D/g, '');
 
+  try {
+    if (x.target.checkValidity() === false) {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+      x.target.classList = "error";
+    } else if (x.target.checkValidity() === true) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      x.target.removeAttribute('class');
+    }
+  } catch (e) {
+    console.log("Could not set validation error attribute")
+  }
 
+  if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
+      x.target.id === "c-number") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if ((paymentDataArr[0].length < 13 || paymentDataArr[0].length > 19) &&
+      x.target.id === "c-number") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
+  }
 
   // If Month and Year is 4 digits long, add a "/" between them
-  if (cardDate.length === 4) {
+  if (cardDate.length === 4 && x.target.id === "exp-date") {
     paymentDataArr[1] = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
     formData.children[1].children[1].value = cardDate.replace(/(\d{2})(\d{2})/, "$1/$2");
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if (cardDate.length !== 4 && x.target.id === "exp-date") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
+  }
+
+  if (paymentDataArr[2].length === 3 && paymentDataArr[2].length === 4 &&
+      x.target.id === "sec-code") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if (paymentDataArr[2].length !== 3 && paymentDataArr[2].length !== 4 &&
+      x.target.id === "sec-code") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
 
   // If payment data is verified, enable continue button
-  if (paymentDataArr[0].length >= 13 && paymentDataArr[0].length <= 19 &&
-      cardDate.length === 4 && paymentDataArr[2].length >= 3 &&
-      paymentDataArr[2].length <= 4 && paymentDataArr[3].indexOf(' ') > 0 &&
-      paymentDataArr[3].indexOf(' ') + 1 < paymentDataArr[3].length) {
-
-    try {
-      contButton.removeAttribute("disabled");
-    } catch (e) {
-      console.log("Could not enable button");
-    }
-
-    localStorage.setItem("localPaymentData", paymentDataArr);
-  } else {
-
-    try {
-      contButton.removeAttribute("disabled");
-    } catch (e) {
-      console.log("Could not enable button");
-    }
-
-    contButton.setAttribute("disabled", "true");
+  if (paymentDataArr[3].indexOf(' ') > 0 && paymentDataArr[3].indexOf(' ') + 1
+      < paymentDataArr[3].length && x.target.id === "c-name") {
+    x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    x.target.removeAttribute('class');
+  } else if ((paymentDataArr[3].indexOf(' ') <= 0 || paymentDataArr[3].indexOf(' ') + 1
+      >= paymentDataArr[3].length) && x.target.id === "c-name"){
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    x.target.classList = "error";
   }
+  localStorage.setItem("localPaymentData", paymentDataArr);
 
 }
 
@@ -429,36 +382,6 @@ function displayCart() {
   }
 }
 
-// If not on the confirm page, add prices to an array and local storage
-if (confirmPage !== "confirm" && typeof(localStorage.localNormPriceData) !== "string") {
-  for (i = 0; i < strPrice.length; i++) {
-    priceArr[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
-  }
-  localStorage.setItem("localNormPriceData", priceArr);
-}
-
-// Set normal price as the subtotal
-for (i = 0; i < strPrice.length; i++) {
-  normPrice[i] = parseFloat(strPrice[i].innerHTML.replace("$", ""));
-  updatePrice[i] = normPrice[i];
-  sub += updatePrice[i];
-}
-
-if (typeof(localStorage.localNormPriceData) === "string") {
-  for (i = 0; i < localStorage.localNormPriceData.split(",").length; i++) {
-    normPrice[i] = parseFloat(localStorage.localNormPriceData.split(",")[i].replace("$", ""));
-    updatePrice[i] = normPrice[i];
-    sub += updatePrice[i];
-  }
-}
-
-// If shipping data exist update summary values
-if (typeof(localStorage.localShippingData) === "string" && footercls !== "shopping" && footercls !== "pre-checkout") {
-  updateSummary.children[0].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[0]).toFixed(2);
-  updateSummary.children[1].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[1]).toFixed(2);
-  updateSummary.children[2].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[2]).toFixed(2);
-  updateSummary.children[3].children[0].children[1].innerHTML = "$" + parseFloat(localStorage.localPriceData.split(",")[3]).toFixed(2);
-}
 
 try {
   updateCart.addEventListener('input', updateQty);
@@ -492,7 +415,6 @@ function updateQty() {
     }
 
     localStorage.setItem("localQtyData", qtyArr);
-    console.log("THIS IS AWFUL")
 
     updateSummary.children[0].children[0].children[1].innerHTML = "$" + sub.toFixed(2);
     try {
@@ -722,14 +644,12 @@ function processData() {
 
 if (confirmPage === "items") {
   buyInput = document.querySelectorAll('.item-button');
-
-  contButton.removeAttribute("disabled");
+  qty = document.querySelectorAll('.qty');
 
   for (i = 0; i < buyInput.length-1; i++) {
     if (i % 2 === 0) {
       buyInput[i].type = "button";
       buyInput[i].addEventListener('click', addToCart);
-
     } else {
       buyInput[i].addEventListener('click', removeFromCart);
     }
@@ -751,9 +671,30 @@ if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping"
 
     cartItemsArr[i] = setItem.id;
 
+    setItem.parentElement.querySelector('.qty').removeAttribute('hidden');
     removeButton.removeAttribute('hidden');
   }
   localStorage.setItem("localCartItems", cartItemsArr);
+}
+
+if (footercls === "shopping") {
+  for (i = 0; i < qty.length; i++) {
+    qty[i].addEventListener('input', storeQty);
+  }
+}
+
+if (footercls === "shopping" && typeof(localStorage.localQtyData) === "string") {
+  for (i = 0; i < cartItemsArr.length; i++) {
+    qtyArr[i] = localStorage.localQtyData.split(",")[i];
+    document.querySelector('#' + localStorage.localCartItems.split(",")[i]).parentElement.querySelector('.qty').value = qtyArr[i];
+  }
+}
+
+function storeQty() {
+  for (i = 0; i < cartItemsArr.length; i++) {
+    qtyArr[i] = document.querySelector('#' + cartItemsArr[i]).parentElement.querySelector('.qty').value;
+  }
+  localStorage.setItem("localQtyData", qtyArr);
 }
 
 function addToCart(a) {
@@ -766,9 +707,12 @@ function addToCart(a) {
   itemClicked.alt = "Item added to cart";
 
   cartItemsArr.push(itemClicked.id);
+  qtyArr.push("1");
+
   localStorage.setItem("localCartItems", cartItemsArr);
+  localStorage.setItem("localQtyData", qtyArr);
 
-
+  itemClicked.parentElement.querySelector('.qty').removeAttribute('hidden');
   removeButton.removeAttribute('hidden');
 }
 
@@ -785,6 +729,14 @@ function removeFromCart(b) {
   cartItemsArr.splice(index, 1);
   localStorage.setItem("localCartItems", cartItemsArr);
 
+  try {
+    qtyArr.splice(index, 1);
+    localStorage.setItem("localQtyData", qtyArr);
+  } catch (e) {
+    console.log("Could not remove qty data")
+  }
+
+  itemClicked.parentElement.querySelector('.qty').setAttribute('hidden', 'true');
   itemClicked.setAttribute('hidden', 'true');
 }
 
@@ -792,10 +744,6 @@ function removeFromCart(b) {
 
 if (footercls === "pre-checkout" || footercls === "shipping" ||
     footercls === "billing" || footercls === "payment" || footercls === "confirm") {
-
-  if (footercls === "pre-checkout") {
-    contButton.removeAttribute("disabled");
-  }
 
   for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
@@ -853,7 +801,7 @@ function fetchComplete() {
     rmv.type = "button"
     rmv.id = "r" + i;
     rmv.classList = "remove-button"
-    rmv.value = "Remove from cart"
+    rmv.value = "Remove"
     cnfqty.classList = "qty";
 
     priceArr.push(parseFloat(selectedItemArr[3].replace("$", "")));
@@ -888,7 +836,7 @@ function fetchComplete() {
 
   qty = document.querySelectorAll('.qty');
 
-  if (footercls === "pre-checkout") {
+  if (footercls === "pre-checkout" && typeof(localStorage.localQtyData) !== "string") {
 
     for (i = 0; i < qty.length; i++) {
       qtyArr[i] = qty[i].value;

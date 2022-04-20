@@ -34,19 +34,23 @@
           <ol>
             <li>
               <label for="c-number">Card Number</label>
-              <input type="number" name="c-number" id="c-number" required />
+              <input type="number" name="c-number" id="c-number" required/>
+              <p hidden class="data-error">Please enter a card number that is 13-19 digits long</p>
             </li>
             <li>
               <label for="exp-date">Expiration Date</label>
               <input type="number" name="exp-date" id="exp-date" placeholder="MM/YY" required />
+              <p hidden class="data-error">Please enter a valid expiration date</p>
             </li>
             <li>
               <label for="sec-code">Security Code</label>
               <input type="number" name="sec-code" id="sec-code" placeholder="3 or 4 digit code" required />
+              <p hidden class="data-error">Please enter a valid security code</p>
             </li>
             <li>
               <label for="c-name">Name on Card</label>
               <input type="text" name="c-name" id="c-name" placeholder="John Doe" required />
+              <p hidden class="data-error">Please enter the first and last name on your card</p>
             </li>
           </ol>
         </fieldset>
@@ -101,7 +105,7 @@
       </aside>
     </main>
     <footer id="footer" class="payment">
-      Site copyright Cyrus Herrera 2022
+      Site copyright WebDevMaestros 2022
     </footer>
     <script src="../assets/js/main.js"></script>
   </body>
