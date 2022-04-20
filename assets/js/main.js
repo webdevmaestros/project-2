@@ -2,7 +2,6 @@
 
 /* <--------------- Global Variables ---------------> */
 var navPick = document.querySelector('nav').children[0]; // Navigation
-var contButton = document.querySelector('#submit'); // Submit button
 var confirmPage = document.querySelector("#order-info").className; // Checks if user is on confirm page
 var qty = document.querySelectorAll('.qty'); // Cart quantity
 var formData = ""; // Data in the form
@@ -59,12 +58,6 @@ var cartItemsArr = [];
 var allItemsArr = [];
 var selectedItemArr = [];
 
-try {
-  contButton.setAttribute("disabled", "true");
-} catch (e) {
-  console.log("Could not disable contButton")
-}
-
 // Set these variables when on form pages
 
 try {
@@ -72,17 +65,6 @@ try {
     formData = document.forms[0].children[1].children[0];
     formLength = document.forms[0].length - 2;
     formType = document.forms[0].id;
-
-    for (i = 0; i < formLength; i++) {
-      try {
-        formData.children[i].children[1].setCustomValidity(formData.children[i].getAttribute('data-error'));
-      } catch (e) {
-        console.log("Error messages could not be updated");
-      }
-    }
-
-  } else {
-    contButton.removeAttribute("disabled");
   }
 
 } catch (e) {
@@ -133,12 +115,6 @@ if (typeof(localStorage.localShippingData) === "string" && formType === 'shippin
   navPick.children[1].innerHTML = "<a href=\"billing/\">Billing</a>";
   navPick.children[2].innerHTML = "<a href=\"payment/\">Payment</a>";
 
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not disable button");
-  }
-
 }
 
 try {
@@ -148,18 +124,13 @@ try {
 }
 
 try {
-  shippingFormData.addEventListener('input', fillShippingForm);
+  shippingFormData.addEventListener('input', shpData);
 } catch (e) {
   console.log("Could not addEventListener to shippingFormData variables");
 }
 
-function fillShippingForm() {
-  var a = shpData("shipping");
-  console.log(a + "form is active");
-}
-
 function shpData(x) {
-  var type = x; // Either Shipping or Billing form
+  var type = x.target.parentElement.parentElement.parentElement.name; // Either Shipping or Billing form
   var verifyData = 0; // Verify phone and email formatting
   var checked = ""; // Check for same as shipping
   var atIndex = ""; // The index of @ in the email string
@@ -208,94 +179,48 @@ function shpData(x) {
 
   }
 
+  try {
+    if (x.target.checkValidity() === false) {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    } else if (x.target.checkValidity() === true) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    }
+  } catch (e) {
+    console.log("Could not set validation error attribute")
+  }
+
   phoneNumber = shipDataArr[9];
   atIndex = shipDataArr[1].indexOf("@");
   dotIndex = shipDataArr[1].indexOf(".");
 
-  // Verify email formatting
-  if (dotIndex !== atIndex + 1){
-    verifyData++;
-    // If failed, reset verification
-  } else {
-    verifyData = 0;
+  if (x.target.id === "email") {
+    // Verify email formatting
+    if (dotIndex !== atIndex + 1 && dotIndex !== -1 && dotIndex !== shipDataArr[1].length - 1) {
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+      // If failed, reset verification
+    } else {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
+    }
   }
 
   // Verify phone formatting for both Shipping and Billing
-  if (phoneNumber.replace(/\D/g, '').length === 10) {
-    if (type === "shipping") {
+  if (phoneNumber.replace(/\D/g, '').length === 10 && x.target.id === "tel-national") {
+    console.log("I AM HERE")
+    if (type === "shipping-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[9].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-      verifyData++;
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
 
-    } else if (type === "billing") {
+    } else if (type === "billing-form") {
       shipDataArr[9] = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
       formData.children[10].children[1].value = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-      verifyData++;
+      x.target.parentElement.querySelector('p').setAttribute('hidden', 'true');
+    } else {
+      x.target.parentElement.querySelector('p').removeAttribute('hidden');
     }
     // If failed, reset verification
-  } else {
-    verifyData = 0;
-  }
-
-  // If on the shipping form check to verify it's data
-  if(type === "shipping") {
-
-    // If data is verified, open billing link
-    if (verifyData === 2) {
-      navPick.children[1].innerHTML = "<a href=\"./billing/\">Billing</a>";
-
-      // If billing data available , open payment link
-      if (typeof(localStorage.localBillingData) === "string") {
-        navPick.children[2].innerHTML = "<a href=\"./payment/\">Payment</a>";
-      }
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      localStorage.setItem("localShippingData", shipDataArr);
-
-    } else {
-      navPick.children[1].innerHTML = "";
-      navPick.children[2].innerHTML = "";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      contButton.setAttribute("disabled", "true");
-
-    }
-    // If on the billing form check to verify it's data
-  } else if (type === "billing") {
-    // If data is verified, open payment link
-    if (verifyData === 2) {
-      navPick.children[2].innerHTML = "<a href=\"../payment/\">Payment</a>";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      localStorage.setItem("localBillingData", shipDataArr);
-    } else {
-      navPick.children[2].innerHTML = "";
-
-      try {
-        contButton.removeAttribute("disabled");
-      } catch (e) {
-        console.log("Could not enable button");
-      }
-
-      contButton.setAttribute("disabled", "true");
-
-    }
-
+  } else if (phoneNumber.replace(/\D/g, '').length !== 10 && x.target.id === "tel-national") {
+    x.target.parentElement.querySelector('p').removeAttribute('hidden');
   }
 
 }
@@ -317,25 +242,12 @@ if (typeof(localStorage.localBillingData) === "string" && formType === 'billing-
     formData.children[i].children[1].value = localStorage.localBillingData.split(",")[i-1];
   }
 
-  navPick.children[2].innerHTML = "<a href=\"../payment/\">Payment</a>";
-
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not enable button");
-  }
-
 }
 
 try {
-  billingFormData.addEventListener('input', fillBillingForm);
+  billingFormData.addEventListener('input', shpData);
 } catch (e) {
   console.log("Could addEventListener to billingFormData variables");
-}
-
-function fillBillingForm() {
-  var b = shpData("billing");
-  console.log(b + "form is active");
 }
 
 /* <--------------- Payment Data Storage ---------------> */
@@ -354,12 +266,6 @@ if (typeof(localStorage.localPaymentData) === "string" && formType === 'payment-
 
   for (i = 0; i < formLength; i++) {
     formData.children[i].children[1].value = localStorage.localPaymentData.split(",")[i];
-  }
-
-  try {
-    contButton.removeAttribute("disabled");
-  } catch (e) {
-    console.log("Could not set paymentFormData variables");
   }
 
 }
@@ -397,22 +303,9 @@ function payData() {
       paymentDataArr[2].length <= 4 && paymentDataArr[3].indexOf(' ') > 0 &&
       paymentDataArr[3].indexOf(' ') + 1 < paymentDataArr[3].length) {
 
-    try {
-      contButton.removeAttribute("disabled");
-    } catch (e) {
-      console.log("Could not enable button");
-    }
-
     localStorage.setItem("localPaymentData", paymentDataArr);
   } else {
 
-    try {
-      contButton.removeAttribute("disabled");
-    } catch (e) {
-      console.log("Could not enable button");
-    }
-
-    contButton.setAttribute("disabled", "true");
   }
 
 }
@@ -705,8 +598,6 @@ if (confirmPage === "items") {
   buyInput = document.querySelectorAll('.item-button');
   qty = document.querySelectorAll('.qty');
 
-  contButton.removeAttribute("disabled");
-
   for (i = 0; i < buyInput.length-1; i++) {
     if (i % 2 === 0) {
       buyInput[i].type = "button";
@@ -805,10 +696,6 @@ function removeFromCart(b) {
 
 if (footercls === "pre-checkout" || footercls === "shipping" ||
     footercls === "billing" || footercls === "payment" || footercls === "confirm") {
-
-  if (footercls === "pre-checkout") {
-    contButton.removeAttribute("disabled");
-  }
 
   for (i = 0; i < localStorage.localCartItems.split(",").length; i++) {
     cartItemsArr[i] = localStorage.localCartItems.split(",")[i];
