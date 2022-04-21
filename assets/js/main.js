@@ -669,7 +669,7 @@ if (typeof(localStorage.localCartItems) === "string" && footercls === "shopping"
     removeButton = document.querySelector('#' + remove);
 
     setItem.type = "image";
-    setItem.src = "../assets/images/check.png";
+    setItem.src = "assets/images/check.png";
     setItem.alt = "Item added to cart";
 
     cartItemsArr[i] = setItem.id;
@@ -709,7 +709,7 @@ function addToCart(a) {
   removeButton = document.querySelector('#' + remove);
 
   itemClicked.type = "image";
-  itemClicked.src = "../assets/images/check.png";
+  itemClicked.src = "assets/images/check.png";
   itemClicked.alt = "Item added to cart";
 
   cartItemsArr.push(itemClicked.id);
