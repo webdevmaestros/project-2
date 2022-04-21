@@ -639,7 +639,7 @@ function processData() {
       document.querySelector("#processed").setAttribute("action", "../failed/");
     }
   } else if (footercls === "shopping") {
-    document.querySelector('#processed').action = "../pre-checkout/";
+    document.querySelector('#processed').action = "pre-checkout/";
   }
 }
 
