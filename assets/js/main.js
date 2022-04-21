@@ -290,7 +290,9 @@ function payData(x) {
   var cardDate = ""; // Month and Year values on user's card
 
   // Change Month and Year type from number to text to allow for "/"
+  formData.children[0].children[1].setAttribute("type", "text");
   formData.children[1].children[1].setAttribute("type", "text");
+  formData.children[2].children[1].setAttribute("type", "text");
 
   // Write form data to local array
   for (i = 0; i < formLength; i++) {
