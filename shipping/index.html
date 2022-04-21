@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Billing</title>
+    <title>Shipping</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
     <link rel="stylesheet" href="../assets/css/screen.css"/>
   </head>
@@ -11,8 +11,8 @@
       <a class="title-nav" href="../">The Store Company</a>
       <nav id="navigation">
         <ul class="nav-info">
-          <li><a href="../shipping/">Shipping</a></li>
-          <li class="active"><a href="../billing/">Billing</a></li>
+          <li class="active"><a href="../shipping/">Shipping</a></li>
+          <li><a href="../billing/">Billing</a></li>
           <li><a href="../payment/">Payment</a></li>
         </ul>
       </nav>
@@ -23,19 +23,15 @@
           <input type="image" src="../assets/images/bag.png" alt="View shopping cart"/>
         </li>
       </ul>
-      <header id="label-billing">
-        <h2>Billing</h2>
+      <header id="label-shipping" aria-label="Shipping">
+        <h2>Shipping</h2>
       </header>
-      <form action="../payment/" id="billing-form" name="billing-form" aria-labelledby="label-billing">
+      <form action="../billing/" id="shipping-form" name="shipping-form" aria-labelledby="label-shipping">
         <header class="page-cmd">
-          <h3>Bill To:</h3>
+          <h3>Ship To:</h3>
         </header>
-        <fieldset name="billing-form">
+        <fieldset name="shipping-form">
           <ol>
-            <li aria-hidden="true">
-              <input hidden type="checkbox" name="same-as-shipping" id="same-as-shipping" />
-              <label hidden for="same-as-shipping">Same as shipping</label>
-            </li>
             <li>
               <label for="name">Full Name</label>
               <input type="text" name="name" id="name" placeholder="John Doe" required />
@@ -338,7 +334,7 @@
         <ul id="nextpage">
         <li>
           <h4>
-            <button type="submit" class="submit" id="submit" value="Continue to Payment">Continue to Payment</button>
+            <button type="submit" id="submit" class="submit" value="Continue to Billing">Continue to Billing</button>
           </h4>
         </li>
         </ul>
@@ -348,7 +344,7 @@
           <h3>Cart</h3>
           <ul class="buttons">
             <li id="x-button">
-              <input type="image" src="../assets/images/x-button.png" alt="Close shopping cart"/>
+              <input type="image" src="assets/images/x-button.png" alt="Close shopping cart"/>
             </li>
           </ul>
           <ul class="items">
@@ -385,7 +381,7 @@
         </section>
       </aside>
     </main>
-    <footer id="footer" class="billing">
+    <footer id="footer" class="shipping">
       Site copyright WebDevMaestros 2022
     </footer>
     <script src="../assets/js/main.js"></script>
