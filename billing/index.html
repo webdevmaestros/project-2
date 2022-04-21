@@ -43,7 +43,7 @@
             </li>
             <li>
               <label for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="email@example.com" required />
+              <input type="email" name="email" id="email" placeholder="email@example.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
               <p hidden class="data-error">Please enter a valid email address</p>
             </li>
             <li>
@@ -330,7 +330,7 @@
             </li>
             <li>
               <label for="tel-national">Phone Number</label>
-              <input type="tel" name="tel-national" id="tel-national" placeholder="555-555-5555" required />
+              <input type="tel" name="tel-national" id="tel-national" placeholder="555-555-5555" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
               <p hidden class="data-error">Please enter a 10 digit Phone Number</p>
             </li>
           </ol>
