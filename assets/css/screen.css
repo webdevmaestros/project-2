@@ -174,7 +174,6 @@ article input {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-
 }
 
 .qty {
@@ -683,6 +682,13 @@ li.active a {
 
 }
 
+.items > li {
+  margin: 1.2em; /* 28.8/ 24 = 1.2em */
+}
+
+.item-button {
+  max-width: 300px;
+}
 @media screen and (min-width: 23.25em) /* 372px = 23.25em */ {
 
   fieldset ol {
