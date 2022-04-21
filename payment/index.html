@@ -34,17 +34,17 @@
           <ol>
             <li>
               <label for="c-number">Card Number</label>
-              <input type="text" name="c-number" id="c-number" required pattern=".{13,19}"/>
+              <input type="number" name="c-number" id="c-number" required pattern=".{13,19}"/>
               <p hidden class="data-error">Please enter a card number that is 13-19 digits long</p>
             </li>
             <li>
               <label for="exp-date">Expiration Date</label>
-              <input type="text" name="exp-date" id="exp-date" placeholder="MM/YY" required pattern="[0-1][0-9]/[0-9][0-9]" />
+              <input type="number" name="exp-date" id="exp-date" placeholder="MM/YY" required pattern="[0-1][0-9]/[0-9][0-9]" />
               <p hidden class="data-error">Please enter a valid expiration date</p>
             </li>
             <li>
               <label for="sec-code">Security Code</label>
-              <input type="text" name="sec-code" id="sec-code" placeholder="3 or 4 digit code" pattern=".{3,4}" />
+              <input type="number" name="sec-code" id="sec-code" placeholder="3 or 4 digit code" pattern=".{3,4}" />
               <p hidden class="data-error">Please enter a valid security code</p>
             </li>
             <li>
