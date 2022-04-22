@@ -406,6 +406,7 @@ function updateQty() {
   // Update quantity and price points when quantity of an item changes
   if (confirmPage !== "confirm") {
     sub = 0;
+    updatePrice = [];
     for (i = 0; i < qty.length; i++) {
       console.log(qty[i].value);
       updatePrice[i] = localStorage.localNormPriceData.split(",")[i] * parseInt(qty[i].value);
@@ -423,7 +424,11 @@ function updateQty() {
       console.log("Could not display total");
     }
     if (tax !== 0){
-      updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
+      try {
+        updateSummary.children[2].children[0].children[1].innerHTML = "$" + (tax * sub).toFixed(2);
+      } catch (e) {
+        console.log("Could not display tax");
+      }
     }
   }
 
@@ -735,6 +740,7 @@ function removeFromCart(b) {
   addButton.removeAttribute('alt');
 
   cartItemsArr.splice(index, 1);
+
   localStorage.setItem("localCartItems", cartItemsArr);
 
   try {
@@ -917,8 +923,13 @@ function removeItem(rbutton) {
   priceArr = [];
 
   for (i = 0; i < document.querySelector(".items").children.length; i++) {
-    priceArr[i] = parseFloat(document.querySelectorAll(".price")[i].innerHTML.replace("$", ""));
+    priceArr[i] = parseFloat(allItemsArr[parseInt(cartItemsArr[i].replace("a", ""))-1].split(",")[3].replace("$", ""));
+    console.log(parseInt(allItemsArr[parseInt(cartItemsArr[i].replace("a", ""))-1].split(",")[3].replace("$", "")));
   }
+
+  qty = document.querySelectorAll('.qty');
+  strPrice = document.querySelectorAll('.price');
   localStorage.setItem("localNormPriceData", priceArr);
+  updateQty();
 
 }
